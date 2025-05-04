@@ -1,1 +1,0 @@
-.\Generate-AdmxJson.ps1 -AdmxBasePath "C:\Program Files (x86)\Microsoft Group Policy\Windows 11 Sep 2024 Update (24H2)\PolicyDefinitions\" -OutputPath ".\" -Languages "en-US", "de-DE"
