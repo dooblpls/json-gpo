@@ -1,0 +1,115 @@
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ADMX Web Viewer</title>
+    <!-- Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms"></script>
+    <style>
+        /* Simple Tree Styling */
+        .tree ul { padding-left: 1.5rem; }
+        .tree li { list-style: none; position: relative; }
+        .tree li::before {
+            content: '';
+            position: absolute;
+            left: -1rem;
+            top: 0.6rem; /* Adjust vertical alignment */
+            border-left: 1px solid #ccc;
+            border-bottom: 1px solid #ccc;
+            width: 0.75rem;
+            height: 0;
+        }
+         .tree > ul > li::before { border-left: none; } /* No line for root items */
+         .tree li:last-child::before { height: 0.6rem; } /* Shorten line for last item */
+
+        .tree .toggle { cursor: pointer; user-select: none; font-weight: bold; }
+        .tree .toggle.collapsed + ul { display: none; }
+        .tree .category-name { cursor: pointer; }
+        .tree .category-name:hover { background-color: #e5e7eb; /* gray-200 */ }
+        .tree .category-name.selected { background-color: #d1d5db; /* gray-300 */ font-weight: bold;}
+
+        /* Ensure columns take full height and scroll independently */
+        .main-content { height: calc(100vh - 4rem); } /* Adjust 4rem based on header height */
+    </style>
+</head>
+<body class="bg-gray-100">
+
+    <header class="bg-blue-600 text-white p-4 flex flex-col sm:flex-row justify-between items-center gap-2 sm:gap-4">
+        <h1 class="text-xl font-semibold text-center sm:text-left">ADMX Web Viewer</h1>
+        <!-- Global Search Container -->
+        <div class="relative flex-grow w-full sm:w-auto max-w-lg">
+            <label for="global-search" class="sr-only">Global suchen</label>
+            <input type="search" id="global-search" placeholder="Global suchen (Richtlinie, Beschreibung, Registry...)" class="w-full p-2 pl-8 border border-blue-400 rounded bg-blue-500 placeholder-blue-200 text-white focus:outline-none focus:ring-2 focus:ring-white focus:bg-white focus:text-gray-900">
+            <div class="absolute inset-y-0 left-0 pl-2 flex items-center pointer-events-none">
+                <svg class="h-5 w-5 text-blue-200" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z" clip-rule="evenodd" />
+                </svg>
+            </div>
+        </div>
+        <!-- Language Selector -->
+        <div>
+            <label for="language-select" class="sr-only">Sprache wählen</label>
+            <select id="language-select" class="bg-blue-700 border border-blue-500 rounded px-2 py-1 text-white">
+                <option value="de-DE">Deutsch (DE)</option>
+                <option value="en-US">English (US)</option>
+                <!-- Weitere Sprachen hier hinzufügen -->
+            </select>
+        </div>
+    </header>
+
+    <div class="flex flex-col md:flex-row main-content">
+
+        <!-- Linke Spalte: Navigation -->
+        <aside id="nav-column" class="w-full md:w-1/4 lg:w-1/5 bg-white border-r border-gray-300 p-4 overflow-y-auto">
+            <h2 class="text-lg font-semibold mb-4">Navigation</h2>
+            <nav id="nav-tree" class="text-sm tree"></nav>
+        </aside>
+
+        <!-- Mittlere Spalte: Einstellungen -->
+        <section id="settings-column" class="w-full md:w-1/2 lg:w-2/5 bg-white border-r border-gray-300 p-4 overflow-y-auto">
+             <div class="mb-4">
+                <label for="settings-search" class="sr-only">Einstellungen durchsuchen</label>
+                <input type="search" id="settings-search" placeholder="Einstellungen durchsuchen..." class="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
+            </div>
+            <div id="settings-list">
+                <!-- Einstellungsliste wird hier per JS eingefügt -->
+                <p class="text-gray-500">Wählen Sie eine Kategorie aus der Navigation.</p>
+            </div>
+        </section>
+
+        <!-- Rechte Spalte: Details -->
+        <article id="details-column" class="w-full md:w-1/4 lg:w-2/5 bg-gray-50 p-6 overflow-y-auto">
+            <div id="details-content">
+                <h2 class="text-gray-500">Wählen Sie eine Einstellung aus der Liste.</h2>
+                <!-- Details werden hier per JS eingefügt -->
+            </div>
+             <div id="details-placeholder" class="hidden"> <!-- Template für Details -->
+                 <h2 id="details-title" class="text-xl font-semibold mb-3 border-b pb-2"></h2>
+                 <div class="mb-4">
+                    <h3 class="font-semibold text-gray-700 mb-1">Unterstützt auf:</h3>
+                    <p id="details-supported" class="text-sm text-gray-600"></p>
+                 </div>
+                 <div class="mb-4">
+                    <h3 class="font-semibold text-gray-700 mb-1">Beschreibung:</h3>
+                    <p id="details-description" class="text-sm text-gray-600 whitespace-pre-wrap"></p>
+                 </div>
+                 <div class="mb-4">
+                    <h3 class="font-semibold text-gray-700 mb-1">Registrierungsinformationen:</h3>
+                    <div id="details-registry" class="text-sm text-gray-600 bg-gray-200 p-3 rounded font-mono text-xs">
+                       <!-- Registry Keys werden hier per JS eingefügt -->
+                    </div>
+                 </div>
+                  <div class="mb-4" id="details-presentation-container">
+                    <h3 class="font-semibold text-gray-700 mb-1">Optionen:</h3>
+                    <div id="details-presentation" class="text-sm text-gray-600 space-y-2">
+                       <!-- Präsentations-Elemente (Dropdowns etc.) werden hier per JS eingefügt -->
+                    </div>
+                 </div>
+             </div>
+        </article>
+
+    </div>
+
+    <script src="app.js" defer></script>
+</body>
+</html>
