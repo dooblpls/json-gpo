@@ -142,10 +142,11 @@ if (-not [string]::IsNullOrWhiteSpace($labelText)) {
 }
 
 # Helper to process registry information from a policy node
+# Helper to process registry information from a policy node
 function Process-RegistryInfo {
     param(
         [System.Xml.XmlElement]$PolicyNode,
-        [hashtable]$StringTable # Needed for enum items
+        [hashtable]$StringTable # Needed for enum/boolean items
     )
     $regInfo = [PSCustomObject]@{
         key = $PolicyNode.key
@@ -153,7 +154,7 @@ function Process-RegistryInfo {
         type = 'Unknown'
         enabledValue = $null
         disabledValue = $null
-        options = $null # For enums/booleans
+        options = $null # For enums/booleans at the top level
         elements = $null # For complex policies
     }
 
@@ -164,29 +165,38 @@ function Process-RegistryInfo {
         # --- MORE ROBUST CHECKS ---
         $enabledDecimalValue = $null
         $disabledDecimalValue = $null
+        $enabledValueNode = $PolicyNode.enabledValue
+        $disabledValueNode = $PolicyNode.disabledValue
 
         # Check if enabledValue and its decimal child exist before accessing .value
-        if ($PolicyNode.enabledValue -ne $null -and $PolicyNode.enabledValue.decimal -ne $null) {
-            $enabledDecimalValue = $PolicyNode.enabledValue.decimal.value
+        if ($enabledValueNode -is [System.Xml.XmlElement] -and $enabledValueNode.decimal -is [System.Xml.XmlElement] -and $enabledValueNode.decimal.HasAttribute('value')) {
+            $enabledDecimalValue = $enabledValueNode.decimal.value # Direct attribute access
         }
         # Check if disabledValue and its decimal child exist before accessing .value
-        if ($PolicyNode.disabledValue -ne $null -and $PolicyNode.disabledValue.decimal -ne $null) {
-            $disabledDecimalValue = $PolicyNode.disabledValue.decimal.value
+        if ($disabledValueNode -is [System.Xml.XmlElement] -and $disabledValueNode.decimal -is [System.Xml.XmlElement] -and $disabledValueNode.decimal.HasAttribute('value')) {
+            $disabledDecimalValue = $disabledValueNode.decimal.value # Direct attribute access
         }
 
-        # Only proceed if both values were found
+        # Only proceed if both values were found AND are parsable as int
         if ($enabledDecimalValue -ne $null -and $disabledDecimalValue -ne $null) {
             $regInfo.type = 'REG_DWORD' # Common for boolean policies
-            $regInfo.enabledValue = $enabledDecimalValue
-            $regInfo.disabledValue = $disabledDecimalValue
+            if([int]::TryParse($enabledDecimalValue, [ref]$null)) { $regInfo.enabledValue = [int]$enabledDecimalValue }
+            if([int]::TryParse($disabledDecimalValue, [ref]$null)) { $regInfo.disabledValue = [int]$disabledDecimalValue }
 
-            # Initialize options list safely
-            $optionsList = [System.Collections.Generic.List[object]]::new()
-            $optionsList.Add([PSCustomObject]@{ value = $regInfo.enabledValue; display = (Resolve-String -RawString '$(string.Enabled)' -StringTable $StringTable -DefaultValue 'Enabled') })
-            $optionsList.Add([PSCustomObject]@{ value = $regInfo.disabledValue; display = (Resolve-String -RawString '$(string.Disabled)' -StringTable $StringTable -DefaultValue 'Disabled') })
-            $regInfo.options = $optionsList
+            # Create options list if both values were valid ints
+            if($regInfo.enabledValue -ne $null -and $regInfo.disabledValue -ne $null) {
+                $optionsList = [System.Collections.Generic.List[object]]::new()
+                $optionsList.Add([PSCustomObject]@{ value = $regInfo.enabledValue; display = (Resolve-String -RawString '$(string.Enabled)' -StringTable $StringTable -DefaultValue 'Enabled') })
+                $optionsList.Add([PSCustomObject]@{ value = $regInfo.disabledValue; display = (Resolve-String -RawString '$(string.Disabled)' -StringTable $StringTable -DefaultValue 'Disabled') })
+                $regInfo.options = $optionsList
+            } else {
+                Write-Verbose "Policy '$($PolicyNode.name)' has enabledValue/disabledValue, but values '$enabledDecimalValue'/'$disabledDecimalValue' could not be parsed as integers."
+                # Reset values if parsing failed
+                $regInfo.enabledValue = $null
+                $regInfo.disabledValue = $null
+            }
 
-        } elseif ($PolicyNode.enabledValue -ne $null -or $PolicyNode.disabledValue -ne $null) {
+        } elseif ($enabledValueNode -ne $null -or $disabledValueNode -ne $null) {
              # If one exists but not the other or structure is wrong, log it.
              Write-Verbose "Policy '$($PolicyNode.name)' has valueName but incomplete/missing enabledValue/disabledValue decimal structures. Type is Unknown."
              # Let type remain 'Unknown'
@@ -200,63 +210,151 @@ function Process-RegistryInfo {
 
     # Complex policy with <elements>
     if ($PolicyNode.elements) {
-        # Initialize with a resizable list
-        $elementList = [System.Collections.Generic.List[object]]::new()
-
-        # Check if elements node actually has children
+        $elementList = [System.Collections.Generic.List[object]]::new() # List to hold processed elements
         if ($PolicyNode.elements.HasChildNodes) {
             foreach ($element in $PolicyNode.elements.ChildNodes) {
-                # Create element info object first
+                # Skip non-element nodes like comments or whitespace text nodes
+                if ($element -isnot [System.Xml.XmlElement]) {
+                    Write-Verbose "Skipping non-element node of type $($element.GetType().Name) inside <elements> for policy '$($PolicyNode.name)'"
+                    continue # Go to the next node in ChildNodes
+                }
+
+                # Create element info object first - INITIALIZE options to null
                 $elemInfo = [PSCustomObject]@{
-                    id = $element.id
+                    id = $element.id # Safe to access .id now
                     valueName = $element.valueName
                     type = 'Unknown'
-                    options = $null
-                    minValue = if($element.HasAttribute('minValue')) { $element.minValue } else { $null }
-                    maxValue = if($element.HasAttribute('maxValue')) { $element.maxValue } else { $null }
-                    maxLength = if($element.HasAttribute('maxLength')) { $element.maxLength } else { $null }
-                    required = if($element.HasAttribute('required')) { [System.Convert]::ToBoolean($element.required) } else { $false }
+                    options = $null # Start with null options
+                    # Use HasAttribute safely
+                    minValue = if($element.HasAttribute('minValue')) { $element.getAttribute('minValue') } else { $null }
+                    maxValue = if($element.HasAttribute('maxValue')) { $element.getAttribute('maxValue') } else { $null }
+                    maxLength = if($element.HasAttribute('maxLength')) { $element.getAttribute('maxLength') } else { $null }
+                    required = if($element.HasAttribute('required')) { [System.Convert]::ToBoolean($element.getAttribute('required')) } else { $false }
                 }
 
                 # Determine type and options based on element type
                 switch ($element.LocalName) {
                     'enum' {
-                        $elemInfo.type = 'REG_DWORD' # Enum is typically DWORD
-                        $elemOptionsList = [System.Collections.Generic.List[object]]::new()
-                        foreach ($item in $element.item) {
-                            $display = Resolve-String -RawString $item.displayName -StringTable $StringTable -DefaultValue $item.displayName
-                            # --- MORE ROBUST CHECKS ---
-                            $decimalValue = $null
-                            # Check if item.value and item.value.decimal exist before accessing .value
-                            if ($item.value -ne $null -and $item.value.decimal -ne $null) {
-                                $decimalValue = $item.value.decimal.value
-                            }
+                        $elemInfo.type = 'REG_DWORD'
+                        # CREATE A *NEW* LIST LOCAL TO THIS CASE BLOCK
+                        $currentEnumOptions = [System.Collections.Generic.List[object]]::new()
+                        #Write-Host "DEBUG: Created new list 'currentEnumOptions' for enum '$($element.id)'."
 
-                            if ($decimalValue -ne $null) {
-                                 $elemOptionsList.Add([PSCustomObject]@{ value = [int]$decimalValue; display = $display })
-                            } else {
-                                 Write-Warning "Enum item '$display' for element '$($element.id)' in policy '$($PolicyNode.name)' is missing a decimal value structure."
-                            }
-                            # --- END ROBUST CHECKS ---
+                        # Ensure $element.item exists and is iterable before looping
+                        if ($null -ne $element.item) {
+                            # Handle single item case (PowerShell sometimes returns single object instead of array)
+                            $itemsToProcess = @($element.item)
+
+                            foreach ($item in $itemsToProcess) {
+                                # Ensure $item is an element
+                                if ($item -isnot [System.Xml.XmlElement]) { continue }
+
+                                $display = Resolve-String -RawString $item.displayName -StringTable $StringTable -DefaultValue $item.displayName
+                                #Write-Host "DEBUG:   Processing item with display '$display' (Raw: '$($item.displayName)')"
+
+                                $itemValue = $null # Final integer value
+                                $valueStringRaw = $null # Raw string value found
+
+                                # Check if item.value exists and is an element
+                                $valueNode = $item.value
+                                if ($valueNode -is [System.Xml.XmlElement]) {
+
+                                    # --- Use SelectSingleNode to find decimal or string ---
+                                    # Prefer decimal if it exists (ignore namespace)
+                                    $decimalNode = $valueNode.SelectSingleNode("*[local-name()='decimal']")
+
+                                    if ($decimalNode -ne $null -and $decimalNode -is [System.Xml.XmlElement]) {
+                                        #Write-Host "DEBUG:     Found <decimal> node via SelectSingleNode."
+                                        # Check if the 'value' attribute exists on the decimal node
+                                        if ($decimalNode.HasAttribute('value')) {
+                                             $valueStringRaw = $decimalNode.GetAttribute('value')
+                                             #Write-Host "DEBUG:       Decimal attribute value: '$valueStringRaw'"
+                                        } else {
+                                             Write-Warning "Enum item '$display' for element '$($element.id)' has a <decimal> tag without a 'value' attribute."
+                                        }
+                                    }
+                                    else {
+                                        # Otherwise, check for string (ignore namespace)
+                                        $stringNode = $valueNode.SelectSingleNode("*[local-name()='string']")
+                                        if ($stringNode -ne $null -and $stringNode -is [System.Xml.XmlElement]) {
+                                             #Write-Host "DEBUG:     Found <string> node via SelectSingleNode."
+                                             # Get the text content, handle potential null/empty, and trim whitespace
+                                             $valueStringRaw = $stringNode.'#text' # Try #text first
+                                             if($valueStringRaw -ne $null) {
+                                                 $valueStringRaw = $valueStringRaw.Trim()
+                                                  #Write-Host "DEBUG:       String #text value (trimmed): '$valueStringRaw'"
+                                             } else {
+                                                # Fallback to InnerText
+                                                 $valueStringRaw = $stringNode.InnerText.Trim()
+                                                 #Write-Host "DEBUG:       String InnerText value (trimmed): '$valueStringRaw'"
+                                             }
+
+                                             if([string]::IsNullOrWhiteSpace($valueStringRaw)) {
+                                                  Write-Warning "Enum item '$display' for element '$($element.id)' has an empty <string> tag."
+                                                  $valueStringRaw = $null # Ensure it's null if empty
+                                             }
+                                        } else {
+                                             #Write-Host "DEBUG:     <value> exists, but no <decimal> or <string> child found via SelectSingleNode."
+                                        }
+                                    }
+                                    # --- END SelectSingleNode logic ---
+
+                                } else {
+                                     #Write-Host "DEBUG:     No <value> element found or it's not an element."
+                                }
+
+                                # Try to parse the found, trimmed string value as an integer
+                                if ($valueStringRaw -ne $null) {
+                                     #Write-Host "DEBUG:     Attempting to parse '$valueStringRaw' as int..."
+                                    $parseResult = [int]::TryParse($valueStringRaw, [ref]$itemValue)
+                                    if ($parseResult) {
+                                        #Write-Host "DEBUG:       Parse SUCCESSFUL. Value: $itemValue."
+                                        # Add to the *local* list 'currentEnumOptions'
+                                        #Write-Host "DEBUG:       Adding to 'currentEnumOptions' list..."
+                                        # Check if list is valid before adding (extra safety)
+                                        if($null -ne $currentEnumOptions){
+                                            $currentEnumOptions.Add([PSCustomObject]@{ value = $itemValue; display = $display })
+                                            #Write-Host "DEBUG:       Added. currentEnumOptions count: $($currentEnumOptions.Count)"
+                                        } else {
+                                            Write-Error "FATAL: currentEnumOptions is null before Add! This should not happen."
+                                        }
+                                    } else {
+                                         #Write-Host "DEBUG:       Parse FAILED."
+                                        Write-Warning "Enum item '$display' for element '$($element.id)' in policy '$($PolicyNode.name)' has a value '$valueStringRaw' that could not be parsed as an integer."
+                                    }
+                                } else {
+                                     #Write-Host "DEBUG:     No parsable value string found for item '$display'."
+                                    Write-Warning "Enum item '$display' for element '$($element.id)' in policy '$($PolicyNode.name)' is missing a supported value structure or the value was empty."
+                                }
+                            } # End foreach $item
+                        } else {
+                             #Write-Host "DEBUG: No items found for enum '$($element.id)'"
+                             Write-Warning "No <item> elements found inside <enum id='$($element.id)'> for policy '$($PolicyNode.name)'."
                         }
-                        if ($elemOptionsList.Count -gt 0) {
-                             $elemInfo.options = $elemOptionsList
+
+                        # AFTER the loop, assign the collected options IF the list has items
+                        if ($currentEnumOptions -ne $null -and $currentEnumOptions.Count -gt 0) {
+                            #Write-Host "DEBUG: Assigning $($currentEnumOptions.Count) options from 'currentEnumOptions' to element '$($element.id)'."
+                            $elemInfo.options = $currentEnumOptions # Assign the completed list
+                        } else {
+                            #Write-Host "DEBUG: 'currentEnumOptions' list is empty or null. Options for '$($element.id)' will remain null."
                         }
-                    }
+                    } # End 'enum' case
+
                     'decimal' { $elemInfo.type = 'REG_DWORD' }
                     'text' { $elemInfo.type = 'REG_SZ' }
                     'boolean' {
                         $elemInfo.type = 'REG_DWORD'
-                        # Booleans in elements often map 0/1. Get true/false text if available.
-                        # Assuming standard 1=true, 0=false if not specified via value nodes
-                         $trueValue = 1
-                         $falseValue = 0
-                         # Could add checks for explicit trueValue/falseValue nodes if needed
-
+                        # Create and assign boolean options list directly
                         $boolOptionsList = [System.Collections.Generic.List[object]]::new()
-                        $boolOptionsList.Add([PSCustomObject]@{ value = $trueValue; display = (Resolve-String -RawString '$(string.True)' -StringTable $StringTable -DefaultValue 'True') })
-                        $boolOptionsList.Add([PSCustomObject]@{ value = $falseValue; display = (Resolve-String -RawString '$(string.False)' -StringTable $StringTable -DefaultValue 'False') })
-                        $elemInfo.options = $boolOptionsList
+                        $trueValue = 1; $falseValue = 0
+                        # Resolve standard True/False strings using the provided string table
+                        $trueDisplay = Resolve-String -RawString '$(string.True)' -StringTable $StringTable -DefaultValue 'True'
+                        $falseDisplay = Resolve-String -RawString '$(string.False)' -StringTable $StringTable -DefaultValue 'False'
+                        $boolOptionsList.Add([PSCustomObject]@{ value = $trueValue; display = $trueDisplay })
+                        $boolOptionsList.Add([PSCustomObject]@{ value = $falseValue; display = $falseDisplay })
+                        $elemInfo.options = $boolOptionsList # Assign the new list
+                         #Write-Host "DEBUG: Assigned boolean options list to element '$($element.id)'."
                     }
                     'multiText' { $elemInfo.type = 'REG_MULTI_SZ' }
                     'list' {
@@ -264,8 +362,10 @@ function Process-RegistryInfo {
                          Write-Warning "Registry representation for 'list' element type for '$($elemInfo.valueName)' requires specific handling based on ADMX pattern."
                     }
                     default { Write-Warning "Unsupported element type '$($element.LocalName)' found in policy '$($PolicyNode.name)'." }
-                }
-                 $elementList.Add($elemInfo) # Add the processed element info
+                } # End switch
+
+                $elementList.Add($elemInfo) # Add the processed element info (with potentially populated options)
+
             } # End foreach $element
         } # End if $PolicyNode.elements.HasChildNodes
 
@@ -287,8 +387,8 @@ function Process-RegistryInfo {
 
 
     # Handle policies without valueName and without elements
-    if (-not $PolicyNode.valueName -and -not $PolicyNode.elements) {
-         Write-Verbose "Policy '$($PolicyNode.name)' has no 'valueName' or 'elements'. It might be a grouping or incomplete."
+    if (-not $PolicyNode.valueName -and -not ($regInfo.elements -ne $null -and $regInfo.elements.Count -gt 0)) {
+         Write-Verbose "Policy '$($PolicyNode.name)' has no 'valueName' or populated 'elements'. It might be a grouping policy or incomplete."
          # Keep Key, but other fields are null/unknown
     }
 
