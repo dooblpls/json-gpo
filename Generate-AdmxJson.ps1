@@ -39,7 +39,10 @@ param(
 
     [Parameter(Mandatory = $true)]
     [string]$OutputPath,
-
+	
+    [Parameter(Mandatory = $true)]
+    [string]$SetName,
+	
     [Parameter(Mandatory = $true)]
     [string[]]$Languages,
 
@@ -826,7 +829,7 @@ foreach ($lang in $Languages) {
     }
 
     # Convert to JSON and save
-    $outputFileName = "data_$($lang.Replace('-','_')).json" # e.g., data_en_US.json
+    $outputFileName = "$($SetName)_$($lang.Replace('-','_')).json" # e.g., data_en_US.json
     $outputFilePath = Join-Path $OutputPath $outputFileName
     try {
         ConvertTo-Json -InputObject $jsonData -Depth $Depth | Out-File -FilePath $outputFilePath -Encoding UTF8 -ErrorAction Stop
