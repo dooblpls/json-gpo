@@ -2,7 +2,7 @@
 
 **The ultimate modern replacement for legacy Group Policy search tools. Find, explore, and understand ADMX-backed Group Policies with unparalleled ease and speed.**
 
-Tired of clunky interfaces and outdated databases from sites like `admx.help`, `gpsearch.eu`, or manually sifting through `getadmx.com` downloads? ADMX Web Viewer is your new go-to solution for navigating the complex world of Administrative Templates (ADMX).
+Tired of clunky interfaces and outdated databases from sites like `admx help`, `gpsearch`, or being redirected to malicious websites (shout-out to `getadmx`)? ADMX Web Viewer is your new go-to solution for navigating the complex world of Administrative Templates (ADMX).
 
 Built with modern web technologies, this tool provides a fast, intuitive, and searchable interface to explore Group Policy settings from various ADMX sources, including Windows versions (like Windows 11 24H2, Windows 10) and applications like Microsoft Edge.
 
