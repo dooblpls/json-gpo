@@ -100,9 +100,9 @@ Refer to the `POLICY_SETS` constant in `app.js` for how data files are named and
 ### Adding New Policy Sets
 
 1.  **Prepare your Data:** Parse your ADMX/ADML files into the required JSON format.
-```
-.\Generate-AdmxJson.ps1 -AdmxBasePath "C:\Program Files (x86)\Microsoft Group Policy\Windows 11 Sep 2024 Update (24H2)\PolicyDefinitions\" -OutputPath ".\" -Languages "en-US", "de-DE" -SetName "24h2"
-```
+	```
+	.\Generate-AdmxJson.ps1 -AdmxBasePath "C:\Program Files (x86)\Microsoft Group Policy\Windows 11 Sep 2024 Update (24H2)\PolicyDefinitions\" -OutputPath ".\" -Languages "en-US", "de-DE" -SetName "24h2"
+	```
 2.  **Configure `app.js`:**
     *   Add a new entry to the `POLICY_SETS` array in `app.js`:
         ```javascript
