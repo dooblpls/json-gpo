@@ -176,7 +176,16 @@ document.addEventListener('DOMContentLoaded', () => {
          const category = categoriesMap.get(categoryId);
          if (!category || !categoryContainsClass(categoryId, context)) return '';
          const childrenIds = Array.isArray(category.children) ? category.children : [];
-         let childrenHtml = childrenIds.map(childId => renderSingleCategoryRecursive(childId, context)).join('');
+         
+
+         const sortedChildrenIds = childrenIds
+             .map(childId => categoriesMap.get(childId))
+             .filter(child => child && categoryContainsClass(child.id, context)) 
+             .sort((a, b) => (a.displayName || '').localeCompare(b.displayName || ''))
+             .map(child => child.id);
+
+         let childrenHtml = sortedChildrenIds.map(childId => renderSingleCategoryRecursive(childId, context)).join('');
+         
          const hasVisibleChildren = childrenHtml !== '';
          const nodeTreeId = `${context}_${categoryId}`;
          let html = `<li data-tree-id="${nodeTreeId}" data-category-id="${category.id}" data-context="${context}" class="category-list-item original-category" style="display: list-item;">`;
@@ -213,8 +222,17 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         const rootCategory = categoriesMap.get('ROOT');
         const originalTopLevelIds = Array.isArray(rootCategory?.children) ? rootCategory.children : [];
-        let computerChildrenHtml = originalTopLevelIds.map(catId => renderSingleCategoryRecursive(catId, 'Machine')).join('');
-        let userChildrenHtml = originalTopLevelIds.map(catId => renderSingleCategoryRecursive(catId, 'User')).join('');
+        
+        // --- HINZUGEFÜGT: Sortiert die obersten Kategorien alphabetisch ---
+        const sortedOriginalTopLevelIds = originalTopLevelIds
+            .map(catId => categoriesMap.get(catId))
+            .filter(cat => cat)
+            .sort((a, b) => (a.displayName || '').localeCompare(b.displayName || ''))
+            .map(cat => cat.id);
+
+        let computerChildrenHtml = sortedOriginalTopLevelIds.map(catId => renderSingleCategoryRecursive(catId, 'Machine')).join('');
+        let userChildrenHtml = sortedOriginalTopLevelIds.map(catId => renderSingleCategoryRecursive(catId, 'User')).join('');
+        
         const hasComputerChildren = computerChildrenHtml !== '';
         const hasUserChildren = userChildrenHtml !== '';
         let finalHtml = '<ul>';
@@ -251,6 +269,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!category) break; // Should not happen in consistent data
             pathSegments.unshift(category.displayName); // Add to the beginning
             currentCatId = category.parent;
+            if (!currentCatId) break;
         }
 
         const virtualRootName = getVirtualRootName(displayContext);
