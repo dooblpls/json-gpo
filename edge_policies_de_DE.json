@@ -500,7 +500,7 @@
                           {
                               "id":  "Microsoft.Policies.Edge::ScarewareBlocker",
                               "name":  "ScarewareBlocker",
-                              "displayName":  "Einstellungen des Scareware-Blockers",
+                              "displayName":  "Einstellungen für Scareware-Blocker",
                               "parent":  "Microsoft.Policies.Edge::microsoft_edge",
                               "children":  [
 
@@ -869,7 +869,7 @@
                           {
                               "id":  "Microsoft.Policies.Edge::ScarewareBlocker_recommended",
                               "name":  "ScarewareBlocker_recommended",
-                              "displayName":  "Einstellungen des Scareware-Blockers",
+                              "displayName":  "Einstellungen für Scareware-Blocker",
                               "parent":  "Microsoft.Policies.Edge::microsoft_edge_recommended",
                               "children":  [
 
@@ -971,6 +971,7 @@
                                                "Microsoft.Policies.Edge::UserAgentClientHintsGREASEUpdateEnabled",
                                                "Microsoft.Policies.Edge::ExemptDomainFileTypePairsFromFileTypeDownloadWarnings",
                                                "Microsoft.Policies.Edge::DefinePreferredLanguages",
+                                               "Microsoft.Policies.Edge::OnBulkDataEntryEnterpriseConnector",
                                                "Microsoft.Policies.Edge::ImportBrowserSettings",
                                                "Microsoft.Policies.Edge::AllowGamesMenu",
                                                "Microsoft.Policies.Edge::ShowMicrosoftRewards",
@@ -1227,6 +1228,7 @@
                                                "Microsoft.Policies.Edge::NetworkPredictionOptions",
                                                "Microsoft.Policies.Edge::EnforceLocalAnchorConstraintsEnabled",
                                                "Microsoft.Policies.Edge::AllowWebAuthnWithBrokenTlsCerts",
+                                               "Microsoft.Policies.Edge::OnFileAttachedEnterpriseConnector",
                                                "Microsoft.Policies.Edge::AllowTokenBindingForUrls",
                                                "Microsoft.Policies.Edge::EnableOnlineRevocationChecks",
                                                "Microsoft.Policies.Edge::ConfigureOnlineTextToSpeech",
@@ -1280,6 +1282,7 @@
                                                "Microsoft.Policies.Edge::InternetExplorerIntegrationAlwaysUseOSCapture",
                                                "Microsoft.Policies.Edge::ClickOnceEnabled",
                                                "Microsoft.Policies.Edge::CryptoWalletEnabled",
+                                               "Microsoft.Policies.Edge::OnPrintEnterpriseConnector",
                                                "Microsoft.Policies.Edge::GloballyScopeHTTPAuthCacheEnabled",
                                                "Microsoft.Policies.Edge::PictureInPictureOverlayEnabled",
                                                "Microsoft.Policies.Edge::WebWidgetIsEnabledOnStartup",
@@ -1332,6 +1335,7 @@
                                                "Microsoft.Policies.Edge::TotalMemoryLimitMb",
                                                "Microsoft.Policies.Edge::SavingBrowserHistoryDisabled",
                                                "Microsoft.Policies.Edge::EdgeAssetDeliveryServiceEnabled",
+                                               "Microsoft.Policies.Edge::WebAuthenticationRemoteDesktopAllowedOrigins",
                                                "Microsoft.Policies.Edge::AutoplayAllowlist",
                                                "Microsoft.Policies.Edge::SmartActionsBlockList",
                                                "Microsoft.Policies.Edge::InternetExplorerModeTabInEdgeModeAllowed",
@@ -1573,6 +1577,7 @@
                               "policies":  [
                                                "Microsoft.Policies.Edge::IPv6ReachabilityOverrideEnabled",
                                                "Microsoft.Policies.Edge::AccessControlAllowMethodsInCORSPreflightSpecConformant",
+                                               "Microsoft.Policies.Edge::HappyEyeballsV3Enabled",
                                                "Microsoft.Policies.Edge::BlockTruncatedCookies",
                                                "Microsoft.Policies.Edge::DataURLWhitespacePreservationEnabled",
                                                "Microsoft.Policies.Edge::ZstdContentEncodingEnabled",
@@ -2416,7 +2421,7 @@
                             "name":  "RelatedMatchesCloudServiceEnabled",
                             "class":  "Both",
                             "displayName":  "Verwandte Übereinstimmungen in \"Auf Seite suchen\" konfigurieren (veraltet)",
-                            "explainText":  "VERALTET: Diese Richtlinie ist veraltet und funktioniert nach Microsoft Edge Version 134 nicht mehr.\n\n\u0026Gibt an, wie der Benutzer verwandte Übereinstimmungen in \"Auf Seite suchen\" empfängt, was Rechtschreibprüfung, Synonyme und QA-Ergebnisse in Microsoft Edge.\n\nWenn Sie diese Richtlinie aktivieren oder nicht konfigurieren, können Benutzer verwandte Übereinstimmungen unter \"Auf Seite suchen\" auf allen Websites empfangen. Die Ergebnisse werden über einen Clouddienst verarbeitet.\n\nWenn Sie diese Richtlinie deaktivieren, können Benutzer verwandte Übereinstimmungen unter \"Auf Seite suchen\" für eine begrenzte Anzahl von Websites erhalten. In diesem Fall werden die Ergebnisse lokal auf dem Gerät des Benutzers verarbeitet.\n\nHinweis: Diese Richtlinie ist veraltet, weil dieses Feature noch nie in Microsoft Edge aktiviert wurde. Daher wird diese Richtlinie in keiner Version von Microsoft Edge unterstützt.",
+                            "explainText":  "VERALTET: Diese Richtlinie ist veraltet und funktioniert nach Microsoft Edge Version 134 nicht mehr.\n\nGibt an, wie der Benutzer verwandte Übereinstimmungen in „Auf Seite suchen“ empfängt – einer Funktion, die Rechtschreibprüfung, Synonyme und Q\u0026A-Ergebnisse in Microsoft Edge bereitstellt.\n\nWenn Sie diese Richtlinie aktivieren oder nicht konfigurieren, können Benutzer verwandte Übereinstimmungen in „Auf Seite suchen“ auf allen Websites empfangen. Die Ergebnisse werden über einen Clouddienst verarbeitet.\n\nWenn Sie diese Richtlinie deaktivieren, können Benutzer verwandte Übereinstimmungen in „Auf Seite suchen“ nur auf einer begrenzten Anzahl von Websites erhalten. In diesem Fall werden die Ergebnisse lokal auf dem Gerät des Benutzers verarbeitet.\n\nHinweis: Diese Richtlinie ist veraltet. Der zugehörige Clouddienst wurde eingestellt, daher werden das Feature und die Richtlinie für keine Versionen von Microsoft Edge unterstützt.",
                             "supportedOn":  "Microsoft Edge Version 99–134, Windows 7 oder höher",
                             "categoryId":  "Microsoft.Policies.Edge::microsoft_edge",
                             "registry":  {
@@ -3188,6 +3193,32 @@
                             "admxFile":  "msedge.admx"
                         },
                         {
+                            "id":  "Microsoft.Policies.Edge::OnBulkDataEntryEnterpriseConnector",
+                            "name":  "OnBulkDataEntryEnterpriseConnector",
+                            "class":  "Both",
+                            "displayName":  "Konfigurationsrichtlinie für die Massendateneingabe für Connectors für Microsoft Edge for Business zur Verhinderung von Datenverlust",
+                            "explainText":  "Liste der Einstellungen für Microsoft Edge for Business Data Loss Prevention Connectors-Dienste, die angewendet werden sollen, wenn Daten in Microsoft Edge aus der Zwischenablage oder durch Ziehen und Ablegen von Webinhalten eingegeben werden.\n\nConnectorfelder\n\n1. url_list,\ntags,\nenable,\ndisable\nDiese Felder bestimmen, ob der Connector Daten zur Analyse sendet, wenn Inhalte auf einer bestimmten Seite eingegeben werden, und welche Tags in die Analyseanforderung eingeschlossen werden sollen.\nEin Tag, das einem Aktivierungsmuster zugeordnet ist, wird in die Anforderung eingeschlossen, wenn die Seiten-URL mit dem Muster übereinstimmt, es sei denn, es stimmt auch ein entsprechendes Deaktivierungsmuster überein.\nDie Analyse wird ausgelöst, wenn mindestens ein Tag in der Anforderung enthalten ist.\n\n2. service_provider\nIdentifiziert den Analysedienstanbieter, auf den die Konfiguration angewendet wird.\n\n3. block_until_verdict\nWenn der Wert auf 1 festgelegt ist, wartet Microsoft Edge auf eine Antwort vom Analysedienst, bevor der Seite Zugriff auf die Daten gewährt wird.\nJeder andere ganzzahlige Wert ermöglicht der Seite den sofortigen Zugriff auf die Daten.\n\n4. default_action\nWenn diese Option auf „Blockieren“ festgelegt ist, verweigert Microsoft Edge den Seitenzugriff auf die Daten, wenn beim Herstellen einer Verbindung mit dem Analysedienst ein Fehler auftritt.\nJeder andere Wert gestattet der Seite den Zugriff auf die Daten.\n\n5. minimum_data_size\nGibt die Mindestgröße (in Bytes) an, die die eingegebenen Daten erfüllen oder überschreiten müssen, um gescannt zu werden.\nStandardwert: 100 Bytes, wenn das Feld nicht festgelegt ist.\n\nFür diese Richtlinie ist eine zusätzliche Einrichtung erforderlich, damit sie wirksam wird. Den Konfigurationsleitfaden finden Sie unter https://go.microsoft.com/fwlink/?linkid=2320413.\n\nBeispielwert:\n\n[\n  {\n    \"block_until_verdict\": 0,\n    \"default_action\": \"allow\",\n    \"disable\": [\n      {\n        \"tags\": [\n          \"malware\"\n        ],\n        \"url_list\": [\n          \"*.us.com\"\n        ]\n      }\n    ],\n    \"enable\": [\n      {\n        \"tags\": [\n          \"malware\"\n        ],\n        \"url_list\": [\n          \"*\"\n        ]\n      },\n      {\n        \"tags\": [\n          \"dlp\"\n        ],\n        \"url_list\": [\n          \"*.them.com\",\n          \"*.others.com\"\n        ]\n      }\n    ],\n    \"minimum_data_size\": 100,\n    \"service_provider\": \"local_system_agent\"\n  }\n]",
+                            "supportedOn":  "Microsoft Edge Version 137, Windows 7 oder höher",
+                            "categoryId":  "Microsoft.Policies.Edge::microsoft_edge",
+                            "registry":  {
+                                             "key":  "Software\\Policies\\Microsoft\\Edge",
+                                             "type":  "Unknown",
+                                             "elements":  [
+                                                              {
+                                                                  "id":  "OnBulkDataEntryEnterpriseConnector",
+                                                                  "valueName":  "OnBulkDataEntryEnterpriseConnector",
+                                                                  "type":  "REG_SZ",
+                                                                  "options":  null,
+                                                                  "minValue":  null,
+                                                                  "maxValue":  null,
+                                                                  "maxLength":  "1000000",
+                                                                  "required":  false
+                                                              }
+                                                          ]
+                                         },
+                            "admxFile":  "msedge.admx"
+                        },
+                        {
                             "id":  "Microsoft.Policies.Edge::ImportBrowserSettings",
                             "name":  "ImportBrowserSettings",
                             "class":  "Both",
@@ -3937,7 +3968,7 @@
                             "name":  "DynamicCodeSettings",
                             "class":  "Both",
                             "displayName":  "Dynamische Codeeinstellungen",
-                            "explainText":  "Diese Richtlinie steuert die dynamischen Codeeinstellungen für Microsoft Edge.\n\nDas Deaktivieren von dynamischem Code verbessert die Sicherheit von Microsoft Edge, indem verhindert wird, dass potenziell schädlicher dynamischer Code und Code von Drittanbietern Änderungen am Verhalten von Microsoft Edge vornehmen. Dies kann jedoch zu Kompatibilitätsproblemen mit Software von Drittanbietern führen, die im Browserprozess ausgeführt werden muss.\n\nWenn Sie diese Richtlinie auf 0 (Standardeinstellung) festlegen oder ohne Einstellung lassen, verwendet Microsoft Edge die Standardeinstellungen.\n\nWenn Sie diese Richtlinie auf 1 (EnabledForBrowser) festlegen, wird der Microsoft Edge-Browserprozess daran gehindert, dynamischen Code zu erstellen.\n\nZuordnung der Richtlinienoptionen:\n\n* Default (0) = Dynamische Standardcodeeinstellungen\n\n* EnabledForBrowser (1) = Verhindern, dass der Browserprozess dynamischen Code erstellt\n\nNutzen Sie die vorherigen Informationen zum Konfigurieren dieser Richtlinie.",
+                            "explainText":  "Diese Richtlinie steuert die dynamischen Codeeinstellungen für Microsoft Edge.\n\nDas Deaktivieren von dynamischem Code verbessert die Sicherheit von Microsoft Edge, indem verhindert wird, dass potenziell schädlicher dynamischer Code und Drittanbietercode Änderungen am Verhalten von Microsoft Edge vornehmen. Dies kann jedoch zu Kompatibilitätsproblemen mit Software von Drittanbietern (z. B. bestimmte Druckertreiber) führen, die im Browserprozess ausgeführt werden muss.\n\nWenn Sie diese Richtlinie auf 0 (Standardeinstellung) festlegen oder ohne Einstellung lassen, verwendet Microsoft Edge die Standardeinstellungen.\n\nWenn Sie diese Richtlinie auf 1 (EnabledForBrowser) festlegen, wird der Microsoft Edge-Browserprozess daran gehindert, dynamischen Code zu erstellen.\n\nZuordnung der Richtlinienoptionen:\n\n* Default (0) = Dynamische Standardcodeeinstellungen\n\n* EnabledForBrowser (1) = Verhindern, dass der Browserprozess dynamischen Code erstellt\n\nNutzen Sie die vorherigen Informationen zum Konfigurieren dieser Richtlinie.",
                             "supportedOn":  "Microsoft Edge Version 128, Windows 7 oder höher",
                             "categoryId":  "Microsoft.Policies.Edge::microsoft_edge",
                             "registry":  {
@@ -5889,6 +5920,33 @@
                             "admxFile":  "msedge.admx"
                         },
                         {
+                            "id":  "Microsoft.Policies.Edge::HappyEyeballsV3Enabled",
+                            "name":  "HappyEyeballsV3Enabled",
+                            "class":  "Both",
+                            "displayName":  "Verwenden Sie den Happy Eyeballs V3 Algorithmus für Verbindungsversuche",
+                            "explainText":  "Steuert, ob Microsoft Edge den Happy Eyeballs V3 Algorithmus verwendet, um Verbindungsversuche zu optimieren. Dieser Algorithmus verbessert die Zuverlässigkeit und Leistung in Dual-Stack-Netzwerken (IPv4/IPv6), indem Verbindungsversuche über IP-Versionen und HTTP-Protokolle (z. B. HTTP/3 im Vergleich zu anderen) ausgeführt werden. Weitere Informationen finden Sie unter https://datatracker.ietf.org/doc/draft-pauly-happy-happyeyeballs-v3.\n\nAktiviert oder nicht konfiguriert: Verwendet den Algorithmus für Verbindungsversuche.\n\nDeaktiviert: Deaktiviert den Algorithmus.\n\nHinweis: Diese Richtlinie unterstützt die dynamische Aktualisierung.\n\nWichtig: Diese Richtlinie ist temporär und wird in einer zukünftigen Version entfernt.",
+                            "supportedOn":  "Microsoft Edge Version 137, Windows 7 oder höher",
+                            "categoryId":  "Microsoft.Policies.Edge::Network",
+                            "registry":  {
+                                             "key":  "Software\\Policies\\Microsoft\\Edge",
+                                             "valueName":  "HappyEyeballsV3Enabled",
+                                             "type":  "REG_DWORD",
+                                             "enabledValue":  1,
+                                             "disabledValue":  0,
+                                             "options":  [
+                                                             {
+                                                                 "value":  1,
+                                                                 "display":  "Enabled"
+                                                             },
+                                                             {
+                                                                 "value":  0,
+                                                                 "display":  "Disabled"
+                                                             }
+                                                         ]
+                                         },
+                            "admxFile":  "msedge.admx"
+                        },
+                        {
                             "id":  "Microsoft.Policies.Edge::VisualSearchEnabled",
                             "name":  "VisualSearchEnabled",
                             "class":  "Both",
@@ -6592,8 +6650,8 @@
                             "id":  "Microsoft.Policies.Edge::ScarewareBlockerProtectionEnabled_recommended",
                             "name":  "ScarewareBlockerProtectionEnabled_recommended",
                             "class":  "Both",
-                            "displayName":  "Edge Scareware Blocker-Schutz konfigurieren",
-                            "explainText":  "Mit dieser Richtlinieneinstellung können Administratoren steuern, ob Microsoft Edge den Scareware Blocker aktiviert, eine KI-gestützte Funktion, die Warnmeldungen bereitstellt, um Benutzer vor potenziellen technischen Betrugsversuchen zu schützen.\n\nWenn diese Richtlinie aktiviert ist, warnt der Edge Scareware-Blocker Benutzer vor potenziellen technischen Betrugsversuchen.\n\nWenn diese Richtlinie deaktiviert ist, warnt der Edge Scareware Blocker Benutzer nicht vor potenziellen technischen Betrugsversuchen.\n\nWenn diese Richtlinie nicht konfiguriert ist, warnt der Edge Scareware Blocker Benutzer nicht vor potenziellen technischen Betrugsversuchen, aber Benutzer können warnungen in den Einstellungen auswählen.\n\nDurch konfigurieren dieser Richtlinie bestimmen Administratoren, ob Benutzer proaktive Betrugswarnungen erhalten oder manuell aktivieren müssen.",
+                            "displayName":  "Schutz mit Edge Scareware-Blocker konfigurieren",
+                            "explainText":  "Mit dieser Richtlinieneinstellung können Admins steuern, ob Microsoft Edge den Scareware-Blocker aktiviert, eine KI-gestützte Funktion, die Warnmeldungen bereitstellt, um Benutzende vor potenziellen technischen Betrugsversuchen zu schützen.\n\nWenn diese Richtlinie aktiviert ist, warnt der Edge Scareware-Blocker Benutzende vor potenziellen technischen Betrugsversuchen.\n\nWenn diese Richtlinie deaktiviert ist, warnt der Edge Scareware-Blocker Benutzende nicht vor potenziellen technischen Betrugsversuchen.\n\nWenn diese Richtlinie nicht konfiguriert ist, warnt der Edge Scareware-Blocker Benutzende nicht vor potenziellen technischen Betrugsversuchen, aber Benutzende können Warnungen in den Einstellungen auswählen.\n\nDurch Konfiguration dieser Richtlinie bestimmen Admins, ob Benutzende proaktive Betrugswarnungen erhalten oder manuell aktivieren müssen.",
                             "supportedOn":  "Microsoft Edge Version 134, Windows 7 oder höher",
                             "categoryId":  "Microsoft.Policies.Edge::ScarewareBlocker_recommended",
                             "registry":  {
@@ -9301,6 +9359,33 @@
                             "admxFile":  "msedge.admx"
                         },
                         {
+                            "id":  "Microsoft.Policies.Edge::RelatedWebsiteSetsEnabled",
+                            "name":  "RelatedWebsiteSetsEnabled",
+                            "class":  "Both",
+                            "displayName":  "Aktivieren verwandter Websitesätze",
+                            "explainText":  "Mit dieser Richtlinie können Sie die Featureaktivierung für verwandte Websitesätze steuern. Verwandte Websitesätze (RWS) sind eine Möglichkeit für eine Organisation, Beziehungen zwischen Websites zu deklarieren, sodass \"Microsoft Edge\" den Zugriff auf Drittanbietercookies für bestimmte Zwecke auf diesen Websites eingeschränkt zulässt.\n\nWenn diese Richtlinie auf TRUE gesetzt oder nicht festgelegt ist, ist das Feature \"Verwandte Websitesets\" aktiviert.\n\nWenn diese Richtlinie auf FALSE festgelegt ist, wird das Feature \"Verwandte Websitesätze\" deaktiviert.",
+                            "supportedOn":  "Microsoft Edge Version 121, Windows 7 oder höher",
+                            "categoryId":  "Microsoft.Policies.Edge::RelatedWebsiteSets",
+                            "registry":  {
+                                             "key":  "Software\\Policies\\Microsoft\\Edge",
+                                             "valueName":  "RelatedWebsiteSetsEnabled",
+                                             "type":  "REG_DWORD",
+                                             "enabledValue":  1,
+                                             "disabledValue":  0,
+                                             "options":  [
+                                                             {
+                                                                 "value":  1,
+                                                                 "display":  "Enabled"
+                                                             },
+                                                             {
+                                                                 "value":  0,
+                                                                 "display":  "Disabled"
+                                                             }
+                                                         ]
+                                         },
+                            "admxFile":  "msedge.admx"
+                        },
+                        {
                             "id":  "Microsoft.Policies.Edge::EdgeSidebarAppUrlHostBlockList",
                             "name":  "EdgeSidebarAppUrlHostBlockList",
                             "class":  "Both",
@@ -10574,8 +10659,8 @@
                             "name":  "AddressBarMicrosoftSearchInBingProviderEnabled",
                             "class":  "Both",
                             "displayName":  "Vorschläge von „Microsoft Search in Bing“ in der Adressleiste aktivieren (veraltet)",
-                            "explainText":  "VERALTET: Diese Richtlinie ist veraltet. Sie wird gegenwärtig noch unterstützt, aber in einem zukünftigen Release ausgemustert.\n\nAktiviert die Anzeige relevanter Vorschläge von „Microsoft Search in Bing“ in der Vorschlagsliste der Adresszeile, wenn der Benutzer eine Suchanfrage in der Adressleiste eingibt. Wenn Sie diese Richtlinie aktivieren oder nicht konfigurieren, werden Benutzern unter Umständen von „Microsoft Search in Bing“ unterstützte interne Ergebnisse in der Vorschlagsliste der Microsoft Edge-Adressleiste angezeigt. Um auf die Ergebnisse von „Microsoft Search in Bing“ zuzugreifen, muss der Benutzer mit dem Azure AD-Konto seiner Organisation bei Microsoft Edge angemeldet sein.\n\nWenn Sie diese Richtlinie deaktivieren, sehen Benutzer keine internen Ergebnisse in der Microsoft Edge Vorschlagsliste der Adressleiste.\n\nAb Microsoft Edge Version 89 sind Vorschläge von „Microsoft Search in Bing“ auch dann verfügbar, wenn Bing nicht der Standardsuchanbieter des Benutzers ist.\n\nDiese Richtlinie ist aufgrund von Änderungen beim Zugriff auf die Arbeitssuche über Bing-bezogene Endpunkte veraltet und in Microsoft Edge Version 137 veraltet. Verwenden Sie stattdessen die Richtlinie AddressBarWorkSearchResultsEnabled.",
-                            "supportedOn":  "Microsoft Edge Version 81, Windows 7 oder höher",
+                            "explainText":  "VERALTET: Diese Richtlinie ist veraltet und funktioniert nach Microsoft Edge Version 136 nicht mehr.\n\nAktiviert die Anzeige relevanter Vorschläge von „Microsoft Search in Bing“ in der Vorschlagsliste der Adresszeile, wenn der Benutzer eine Suchanfrage in der Adressleiste eingibt. Wenn Sie diese Richtlinie aktivieren oder nicht konfigurieren, werden Benutzern unter Umständen von „Microsoft Search in Bing“ unterstützte interne Ergebnisse in der Vorschlagsliste der Microsoft Edge-Adressleiste angezeigt. Um auf die Ergebnisse von „Microsoft Search in Bing“ zuzugreifen, muss der Benutzer mit dem Azure AD-Konto seiner Organisation bei Microsoft Edge angemeldet sein.\n\nWenn Sie diese Richtlinie deaktivieren, sehen Benutzer keine internen Ergebnisse in der Microsoft Edge Vorschlagsliste der Adressleiste.\n\nAb Microsoft Edge Version 89 sind Vorschläge von „Microsoft Search in Bing“ auch dann verfügbar, wenn Bing nicht der Standardsuchanbieter des Benutzers ist.\n\nDiese Richtlinie ist aufgrund von Änderungen beim Zugriff auf die Arbeitssuche über Bing-bezogene Endpunkte nicht mehr anwendbar.",
+                            "supportedOn":  "Microsoft Edge Version 81–136, Windows 7 oder höher",
                             "categoryId":  "Microsoft.Policies.Edge::microsoft_edge",
                             "registry":  {
                                              "key":  "Software\\Policies\\Microsoft\\Edge",
@@ -18154,29 +18239,28 @@
                             "admxFile":  "msedge.admx"
                         },
                         {
-                            "id":  "Microsoft.Policies.Edge::RelatedWebsiteSetsEnabled",
-                            "name":  "RelatedWebsiteSetsEnabled",
+                            "id":  "Microsoft.Policies.Edge::OnFileAttachedEnterpriseConnector",
+                            "name":  "OnFileAttachedEnterpriseConnector",
                             "class":  "Both",
-                            "displayName":  "Aktivieren verwandter Websitesätze",
-                            "explainText":  "Mit dieser Richtlinie können Sie die Featureaktivierung für verwandte Websitesätze steuern. Verwandte Websitesätze (RWS) sind eine Möglichkeit für eine Organisation, Beziehungen zwischen Websites zu deklarieren, sodass \"Microsoft Edge\" den Zugriff auf Drittanbietercookies für bestimmte Zwecke auf diesen Websites eingeschränkt zulässt.\n\nWenn diese Richtlinie auf TRUE gesetzt oder nicht festgelegt ist, ist das Feature \"Verwandte Websitesets\" aktiviert.\n\nWenn diese Richtlinie auf FALSE festgelegt ist, wird das Feature \"Verwandte Websitesätze\" deaktiviert.",
-                            "supportedOn":  "Microsoft Edge Version 121, Windows 7 oder höher",
-                            "categoryId":  "Microsoft.Policies.Edge::RelatedWebsiteSets",
+                            "displayName":  "Konfigurationsrichtlinie für angefügte Dateien für Microsoft Edge for Business-Connectors zur Verhinderung von Datenverlust",
+                            "explainText":  "Liste der Microsoft Edge for Business Data Loss Prevention Connectors-Diensteinstellungen, die angewendet werden sollen, wenn eine Datei an Microsoft Edge angefügt wird.\n\nConnectorfelder\n\n1. url_list,\ntags,\nenable,\ndisable\nDiese Felder bestimmen, ob der Connector Daten zur Analyse sendet, wenn Inhalte auf einer bestimmten Seite eingegeben werden, und welche Tags in die Analyseanforderung eingeschlossen werden sollen.\nEin Tag, das einem Aktivierungsmuster zugeordnet ist, wird in die Anforderung eingeschlossen, wenn die Seiten-URL mit dem Muster übereinstimmt, es sei denn, es stimmt auch ein entsprechendes Deaktivierungsmuster überein.\nDie Analyse wird ausgelöst, wenn mindestens ein Tag in der Anforderung enthalten ist.\n\n2. service_provider\nIdentifiziert den Analysedienstanbieter, auf den die Konfiguration angewendet wird.\n\n3. block_until_verdict\nWenn der Wert auf 1 festgelegt ist, wartet Microsoft Edge auf eine Antwort vom Analysedienst, bevor der Seite Zugriff auf die Daten gewährt wird.\nJeder andere ganzzahlige Wert ermöglicht der Seite den sofortigen Zugriff auf die Daten.\n\n4. default_action\nWenn diese Option auf „Blockieren“ festgelegt ist, verweigert Microsoft Edge den Seitenzugriff auf die Daten, wenn beim Herstellen einer Verbindung mit dem Analysedienst ein Fehler auftritt.\nJeder andere Wert gestattet der Seite den Zugriff auf die Daten.\n\nFür diese Richtlinie ist eine zusätzliche Einrichtung erforderlich, damit sie wirksam wird. Den Konfigurationsleitfaden finden Sie unter https://go.microsoft.com/fwlink/?linkid=2320413.\n\nBeispielwert:\n\n[\n  {\n    \"block_until_verdict\": 0,\n    \"default_action\": \"allow\",\n    \"disable\": [\n      {\n        \"tags\": [\n          \"malware\"\n        ],\n        \"url_list\": [\n          \"*.us.com\"\n        ]\n      }\n    ],\n    \"enable\": [\n      {\n        \"tags\": [\n          \"malware\"\n        ],\n        \"url_list\": [\n          \"*\"\n        ]\n      },\n      {\n        \"tags\": [\n          \"dlp\"\n        ],\n        \"url_list\": [\n          \"*.them.com\",\n          \"*.others.com\"\n        ]\n      }\n    ],\n    \"service_provider\": \"local_system_agent\"\n  }\n]",
+                            "supportedOn":  "Microsoft Edge Version 137, Windows 7 oder höher",
+                            "categoryId":  "Microsoft.Policies.Edge::microsoft_edge",
                             "registry":  {
                                              "key":  "Software\\Policies\\Microsoft\\Edge",
-                                             "valueName":  "RelatedWebsiteSetsEnabled",
-                                             "type":  "REG_DWORD",
-                                             "enabledValue":  1,
-                                             "disabledValue":  0,
-                                             "options":  [
-                                                             {
-                                                                 "value":  1,
-                                                                 "display":  "Enabled"
-                                                             },
-                                                             {
-                                                                 "value":  0,
-                                                                 "display":  "Disabled"
-                                                             }
-                                                         ]
+                                             "type":  "Unknown",
+                                             "elements":  [
+                                                              {
+                                                                  "id":  "OnFileAttachedEnterpriseConnector",
+                                                                  "valueName":  "OnFileAttachedEnterpriseConnector",
+                                                                  "type":  "REG_SZ",
+                                                                  "options":  null,
+                                                                  "minValue":  null,
+                                                                  "maxValue":  null,
+                                                                  "maxLength":  "1000000",
+                                                                  "required":  false
+                                                              }
+                                                          ]
                                          },
                             "admxFile":  "msedge.admx"
                         },
@@ -19945,8 +20029,8 @@
                             "id":  "Microsoft.Policies.Edge::ScarewareBlockerProtectionEnabled",
                             "name":  "ScarewareBlockerProtectionEnabled",
                             "class":  "Both",
-                            "displayName":  "Edge Scareware Blocker-Schutz konfigurieren",
-                            "explainText":  "Mit dieser Richtlinieneinstellung können Administratoren steuern, ob Microsoft Edge den Scareware Blocker aktiviert, eine KI-gestützte Funktion, die Warnmeldungen bereitstellt, um Benutzer vor potenziellen technischen Betrugsversuchen zu schützen.\n\nWenn diese Richtlinie aktiviert ist, warnt der Edge Scareware-Blocker Benutzer vor potenziellen technischen Betrugsversuchen.\n\nWenn diese Richtlinie deaktiviert ist, warnt der Edge Scareware Blocker Benutzer nicht vor potenziellen technischen Betrugsversuchen.\n\nWenn diese Richtlinie nicht konfiguriert ist, warnt der Edge Scareware Blocker Benutzer nicht vor potenziellen technischen Betrugsversuchen, aber Benutzer können warnungen in den Einstellungen auswählen.\n\nDurch konfigurieren dieser Richtlinie bestimmen Administratoren, ob Benutzer proaktive Betrugswarnungen erhalten oder manuell aktivieren müssen.",
+                            "displayName":  "Schutz mit Edge Scareware-Blocker konfigurieren",
+                            "explainText":  "Mit dieser Richtlinieneinstellung können Admins steuern, ob Microsoft Edge den Scareware-Blocker aktiviert, eine KI-gestützte Funktion, die Warnmeldungen bereitstellt, um Benutzende vor potenziellen technischen Betrugsversuchen zu schützen.\n\nWenn diese Richtlinie aktiviert ist, warnt der Edge Scareware-Blocker Benutzende vor potenziellen technischen Betrugsversuchen.\n\nWenn diese Richtlinie deaktiviert ist, warnt der Edge Scareware-Blocker Benutzende nicht vor potenziellen technischen Betrugsversuchen.\n\nWenn diese Richtlinie nicht konfiguriert ist, warnt der Edge Scareware-Blocker Benutzende nicht vor potenziellen technischen Betrugsversuchen, aber Benutzende können Warnungen in den Einstellungen auswählen.\n\nDurch Konfiguration dieser Richtlinie bestimmen Admins, ob Benutzende proaktive Betrugswarnungen erhalten oder manuell aktivieren müssen.",
                             "supportedOn":  "Microsoft Edge Version 134, Windows 7 oder höher",
                             "categoryId":  "Microsoft.Policies.Edge::ScarewareBlocker",
                             "registry":  {
@@ -21112,6 +21196,32 @@
                             "admxFile":  "msedge.admx"
                         },
                         {
+                            "id":  "Microsoft.Policies.Edge::OnPrintEnterpriseConnector",
+                            "name":  "OnPrintEnterpriseConnector",
+                            "class":  "Both",
+                            "displayName":  "Konfigurationsrichtlinie für das Drucken für Microsoft Edge for Business-Connectors zur Verhinderung von Datenverlust",
+                            "explainText":  "Liste der Microsoft Edge for Business Data Loss Prevention Connectors-Diensteinstellungen, die angewendet werden sollen, wenn eine Seite oder Datei aus Microsoft Edgegedruckt wird.\n\nConnectorfelder\n\n1. url_list,\ntags,\nenable,\ndisable\nDiese Felder bestimmen, ob der Connector Daten zur Analyse sendet, wenn Inhalte auf einer bestimmten Seite eingegeben werden, und welche Tags in die Analyseanforderung eingeschlossen werden sollen.\nEin Tag, das einem Aktivierungsmuster zugeordnet ist, wird in die Anforderung eingeschlossen, wenn die Seiten-URL mit dem Muster übereinstimmt, es sei denn, es stimmt auch ein entsprechendes Deaktivierungsmuster überein.\nDie Analyse wird ausgelöst, wenn mindestens ein Tag in der Anforderung enthalten ist.\n\n2. service_provider\nIdentifiziert den Analysedienstanbieter, auf den die Konfiguration angewendet wird.\n\n3. block_until_verdict\nWenn der Wert auf 1 festgelegt ist, wartet Microsoft Edge auf eine Antwort vom Analysedienst, bevor der Seite Zugriff auf die Daten gewährt wird.\nJeder andere ganzzahlige Wert ermöglicht der Seite den sofortigen Zugriff auf die Daten.\n\n4. default_action\nWenn diese Option auf „Blockieren“ festgelegt ist, verweigert Microsoft Edge den Seitenzugriff auf die Daten, wenn beim Herstellen einer Verbindung mit dem Analysedienst ein Fehler auftritt.\nJeder andere Wert gestattet der Seite den Zugriff auf die Daten.\n\nFür diese Richtlinie ist eine zusätzliche Einrichtung erforderlich, damit sie wirksam wird. Den Konfigurationsleitfaden finden Sie unter https://go.microsoft.com/fwlink/?linkid=2320413.\n\nBeispielwert:\n\n[\n  {\n    \"block_until_verdict\": 0,\n    \"default_action\": \"allow\",\n    \"disable\": [\n      {\n        \"tags\": [\n          \"dlp\"\n        ],\n        \"url_list\": [\n          \"*.us.com\"\n        ]\n      }\n    ],\n    \"enable\": [\n      {\n        \"tags\": [\n          \"dlp\"\n        ],\n        \"url_list\": [\n          \"*.them.com\",\n          \"*.others.com\"\n        ]\n      }\n    ],\n    \"service_provider\": \"local_system_agent\"\n  }\n]",
+                            "supportedOn":  "Microsoft Edge Version 137, Windows 7 oder höher",
+                            "categoryId":  "Microsoft.Policies.Edge::microsoft_edge",
+                            "registry":  {
+                                             "key":  "Software\\Policies\\Microsoft\\Edge",
+                                             "type":  "Unknown",
+                                             "elements":  [
+                                                              {
+                                                                  "id":  "OnPrintEnterpriseConnector",
+                                                                  "valueName":  "OnPrintEnterpriseConnector",
+                                                                  "type":  "REG_SZ",
+                                                                  "options":  null,
+                                                                  "minValue":  null,
+                                                                  "maxValue":  null,
+                                                                  "maxLength":  "1000000",
+                                                                  "required":  false
+                                                              }
+                                                          ]
+                                         },
+                            "admxFile":  "msedge.admx"
+                        },
+                        {
                             "id":  "Microsoft.Policies.Edge::GloballyScopeHTTPAuthCacheEnabled",
                             "name":  "GloballyScopeHTTPAuthCacheEnabled",
                             "class":  "Both",
@@ -22163,7 +22273,7 @@
                             "name":  "WebContentFilteringBlockedCategories",
                             "class":  "Both",
                             "displayName":  "Konfigurieren der Webinhaltsfilterung",
-                            "explainText":  "Konfigurieren Sie diese Richtlinie, um den Zugriff auf bestimmte Kategorien von Websites in Microsoft Edge auf Windows-Geräten zu blockieren. Die Webinhaltsfilterung ist ausschließlich in Microsoft Edge unter Windows verfügbar und erfordert die entsprechende Microsoft 365-Lizenzierung.\n\nWenn diese Richtlinie aktiviert ist, wird Benutzern der Zugriff auf URLs blockiert, die in die definierte Liste der Inhaltskategorien gehören. Sie können dies konfigurieren, indem Sie der Liste der blockierten Kategorien Kategoriezeichenfolgen hinzufügen.\n\nWenn die Richtlinie nicht konfiguriert oder deaktiviert ist, werden keine Kategorien blockiert.\n\nUm die Liste der unterstützten Inhaltskategorien anzuzeigen, einschließlich jeder Kategoriezeichenfolge und ihrer Definition, besuchen Sie: https://learn.microsoft.com/en-us/defender-endpoint/web-content-filtering?view=o365-worldwide#category-definitions\n\nUm eine bestimmte URL außerhalb einer Kategorie zu blockieren, verwenden Sie die Richtlinie „Zugriff auf eine Liste von URLs blockieren“.\n\nVerwenden Sie die Richtlinie „Liste zulässiger URLs definieren“, um eine bestimmte URL zuzulassen, die zu einer blockierten Kategorie gehört.\n\nHinweis: Diese Richtlinie wird nur unterstützt, wenn sie über den Edge-Verwaltungsdienst bereitgestellt wird, nicht über Microsoft Intune.\n\nUm diese Richtlinie zu verwenden, muss Ihre Organisation über eine der folgenden Lizenzen verfügen:\n– Microsoft 365 A1, A3 oder A5\n– Microsoft 365 Business Premium\n– Microsoft 365 Business Basic oder Standard mit Intune Plan 1 oder Plan 2\n\nZuordnung der Richtlinienoptionen:\n\n* chat (chat) = Chat\n\n* child_abuse_images (child_abuse_images) = Abbildungen von Kindesmissbrauch\n\n* criminal_activity (criminal_activity) = Kriminelle Handlung\n\n* download_sites (download_sites) = Downloadsites\n\n* gambling (gambling) = Glückspiel\n\n* games (games) = Spiele\n\n* hacking (hacking) = Hacking\n\n* hate_and_intolerance (hate_and_intolerance) = Hass und Intoleranz\n\n* illegal_drug (illegal_drug) = Illegale Drogen\n\n* illegal_software (illegal_software) = Illegale Software\n\n* image_sharing (image_sharing) = Teilen von Bildern\n\n* instant_messaging (instant_messaging) = Chat\n\n* nudity (nudity) = Nacktdarstellungen\n\n* peer_to_peer (peer_to_peer) = Peer-zu-Peer\n\n* pornography_or_sexually_explicit (pornography_or_sexually_explicit) = Pornografie oder sexuell expliziter Inhalt\n\n* professional_networking (professional_networking) = Professionelles Networking\n\n* self_harm (self_harm) = Selbstverletzung\n\n* sex_education (sex_education) = Sexualkunde\n\n* social_networking (social_networking) = Soziales Netzwerken\n\n* streaming_and_downloads (streaming_and_downloads) = Streamingmedien und Downloads\n\n* tasteless (tasteless) = Geschmacklos\n\n* violence (violence) = Gewalt\n\n* weapons (weapons) = Waffen\n\n* web_based_email (web_based_email) = Webbasierte E-Mail\n\n* none (none) = Keine\n\nNutzen Sie die vorherigen Informationen zum Konfigurieren dieser Richtlinie.\n\nBeispielwert:\n\ngambling\nstreaming_and_downloads\ngames",
+                            "explainText":  "Konfigurieren Sie diese Richtlinie, um den Zugriff auf bestimmte Kategorien von Websites in Microsoft Edge auf Windows-Geräten zu blockieren. Die Webinhaltsfilterung ist ausschließlich in Microsoft Edge unter Windows verfügbar und erfordert die entsprechende Microsoft 365-Lizenzierung.\n\nWenn diese Richtlinie aktiviert ist, wird Benutzern der Zugriff auf URLs blockiert, die in die definierte Liste der Inhaltskategorien gehören. Sie können dies konfigurieren, indem Sie der Liste der blockierten Kategorien Kategoriezeichenfolgen hinzufügen.\n\nWenn die Richtlinie nicht konfiguriert oder deaktiviert ist, werden keine Kategorien blockiert.\n\nUm die Liste der unterstützten Inhaltskategorien anzuzeigen, einschließlich jeder Kategoriezeichenfolge und ihrer Definition, besuchen Sie: https://learn.microsoft.com/en-us/defender-endpoint/web-content-filtering?view=o365-worldwide#category-definitions\n\nUm eine bestimmte URL außerhalb einer Kategorie zu blockieren, verwenden Sie die Richtlinie „Zugriff auf eine Liste von URLs blockieren“.\n\nVerwenden Sie die Richtlinie „Liste zulässiger URLs definieren“, um eine bestimmte URL zuzulassen, die zu einer blockierten Kategorie gehört.\n\nHinweis: Diese Richtlinie wird nur unterstützt, wenn sie über den Edge-Verwaltungsdienst bereitgestellt wird, nicht über Microsoft Intune.\n\nUm diese Richtlinie zu verwenden, muss Ihre Organisation über eine der folgenden Lizenzen verfügen:\n– Microsoft 365 A1, A3 oder A5\n– Microsoft 365 Business Premium\n– Microsoft 365 Business Basic oder Standard mit Intune Plan 1 oder Plan 2\n\nZuordnung der Richtlinienoptionen:\n\n* chat (chat) = Chat\n\n* child_abuse_images (child_abuse_images) = Abbildungen von Kindesmissbrauch\n\n* criminal_activity (criminal_activity) = Kriminelle Handlung\n\n* download_sites (download_sites) = Downloadsites\n\n* gambling (gambling) = Glückspiel\n\n* games (games) = Spiele\n\n* hacking (hacking) = Hacking\n\n* hate_and_intolerance (hate_and_intolerance) = Hass und Intoleranz\n\n* illegal_drug (illegal_drug) = Illegale Drogen\n\n* illegal_software (illegal_software) = Illegale Software\n\n* image_sharing (image_sharing) = Teilen von Bildern\n\n* instant_messaging (instant_messaging) = Chat\n\n* nudity (nudity) = Nacktdarstellungen\n\n* peer_to_peer (peer_to_peer) = Peer-zu-Peer\n\n* pornography_or_sexually_explicit (pornography_or_sexually_explicit) = Pornografie oder sexuell expliziter Inhalt\n\n* professional_networking (professional_networking) = Professionelles Networking\n\n* self_harm (self_harm) = Selbstverletzung\n\n* sex_education (sex_education) = Sexualkunde\n\n* social_networking (social_networking) = Soziales Netzwerken\n\n* streaming_and_downloads (streaming_and_downloads) = Streamingmedien und Downloads\n\n* tasteless (tasteless) = Geschmacklos\n\n* violence (violence) = Gewalt\n\n* weapons (weapons) = Waffen\n\n* web_based_email (web_based_email) = Webbasierte E-Mail\n\n* gen_ai (gen_ai) = Generative künstliche Intelligenz\n\n* shopping (shopping) = Shopping\n\n* none (none) = Keine\n\nNutzen Sie die vorherigen Informationen zum Konfigurieren dieser Richtlinie.\n\nBeispielwert:\n\ngambling\nstreaming_and_downloads\ngames",
                             "supportedOn":  "Microsoft Edge Version 135, Windows 7 oder höher",
                             "categoryId":  "Microsoft.Policies.Edge::microsoft_edge",
                             "registry":  {
@@ -23963,8 +24073,8 @@
                             "name":  "MutationEventsEnabled",
                             "class":  "Both",
                             "displayName":  "Veraltete/entfernte Mutationsereignisse aktivieren (veraltet)",
-                            "explainText":  "VERALTET: Diese Richtlinie ist veraltet. Sie wird gegenwärtig noch unterstützt, aber in einem zukünftigen Release ausgemustert.\n\nDiese Richtlinie stellt eine vorübergehende Anmeldung zurück zu einer veralteten und entfernten Reihe von Plattformereignissen mit dem Namen „Mutationsereignisse“ bereit.\n\nWenn Sie diese Richtlinie aktivieren, werden Mutationsereignisse weiterhin ausgelöst, auch wenn sie für normale Webbenutzer standardmäßig deaktiviert wurden.\n\nWenn Sie diese Richtlinie deaktivieren oder nicht konfigurieren, werden diese Ereignisse nicht ausgelöst.\n\nDiese Richtlinie ist eine vorübergehende Problemumgehung, und Unternehmen sollten weiterhin daran arbeiten, ihre Abhängigkeiten von diesen Mutationsereignissen zu entfernen.",
-                            "supportedOn":  "Microsoft Edge Version 124, Windows 7 oder höher",
+                            "explainText":  "VERALTET: Diese Richtlinie ist veraltet und funktioniert nach Microsoft Edge Version 136 nicht mehr.\n\nDiese Richtlinie stellt eine vorübergehende Aktivierung eines veralteten und entfernten Satzes von Plattformereignissen mit der Bezeichnung „Mutationsereignisse“ bereit.\n\nWenn Sie diese Richtlinie aktivieren, werden Mutationsereignisse weiterhin ausgelöst, auch wenn sie für normale Webbenutzer standardmäßig deaktiviert wurden.\n\nWenn Sie diese Richtlinie deaktivieren oder nicht konfigurieren, werden diese Ereignisse nicht ausgelöst.\n\nHinweis:\nDiese Richtlinie ist eine vorübergehende Problemumgehung und wird ab Microsoft Edge Version 137 eingestellt.",
+                            "supportedOn":  "Microsoft Edge Version 124–136, Windows 7 oder höher",
                             "categoryId":  "Microsoft.Policies.Edge::microsoft_edge",
                             "registry":  {
                                              "key":  "Software\\Policies\\Microsoft\\Edge",
@@ -24153,6 +24263,32 @@
                                                                                       "display":  "Verwendung des Entwicklermodus auf der Erweiterungsseite nicht zulassen"
                                                                                   }
                                                                               ],
+                                                                  "minValue":  null,
+                                                                  "maxValue":  null,
+                                                                  "maxLength":  null,
+                                                                  "required":  false
+                                                              }
+                                                          ]
+                                         },
+                            "admxFile":  "msedge.admx"
+                        },
+                        {
+                            "id":  "Microsoft.Policies.Edge::WebAuthenticationRemoteDesktopAllowedOrigins",
+                            "name":  "WebAuthenticationRemoteDesktopAllowedOrigins",
+                            "class":  "Both",
+                            "displayName":  "Zulässige Ursprünge für Proxy-WebAuthn-Anforderungen von Remotedesktop-Anwendungen.",
+                            "explainText":  "Diese Richtlinie definiert eine Liste zulässiger HTTPS-Ursprünge für Remotedesktop-Clientanwendungen, die WebAuthn-API-Anforderungen von einer Browsersitzung auf einem Remotehost initiieren.\n\nIn dieser Richtlinie angegebene Ursprünge können eine WebAuthn-Authentifizierung für Relying Party IDs (RP IDs) anfordern, die sie normalerweise nicht beanspruchen dürfen.\n\nEs werden nur HTTPS-Ursprünge unterstützt. Platzhalter sind nicht zulässig. Einträge, die nicht\ndiese Anforderungen erfüllen, wird ignoriert.\n\nWeitere Informationen zum WebAuthn-Remotedesktop-Supportfeature finden Sie unter https://github.com/w3c/webauthn/wiki/Explainer:-Remote-Desktop-Support/a4e158c569f456c759d0ddd294a9015bd4d4eb9a.\n\nBeispielwert:\n\nhttps://server:8080/",
+                            "supportedOn":  "Microsoft Edge Version 137, Windows 7 oder höher",
+                            "categoryId":  "Microsoft.Policies.Edge::microsoft_edge",
+                            "registry":  {
+                                             "key":  "Software\\Policies\\Microsoft\\Edge",
+                                             "type":  "Unknown",
+                                             "elements":  [
+                                                              {
+                                                                  "id":  "WebAuthenticationRemoteDesktopAllowedOriginsDesc",
+                                                                  "valueName":  null,
+                                                                  "type":  "REG_SZ",
+                                                                  "options":  null,
                                                                   "minValue":  null,
                                                                   "maxValue":  null,
                                                                   "maxLength":  null,

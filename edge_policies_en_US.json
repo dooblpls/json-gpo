@@ -971,6 +971,7 @@
                                                "Microsoft.Policies.Edge::UserAgentClientHintsGREASEUpdateEnabled",
                                                "Microsoft.Policies.Edge::ExemptDomainFileTypePairsFromFileTypeDownloadWarnings",
                                                "Microsoft.Policies.Edge::DefinePreferredLanguages",
+                                               "Microsoft.Policies.Edge::OnBulkDataEntryEnterpriseConnector",
                                                "Microsoft.Policies.Edge::ImportBrowserSettings",
                                                "Microsoft.Policies.Edge::AllowGamesMenu",
                                                "Microsoft.Policies.Edge::ShowMicrosoftRewards",
@@ -1227,6 +1228,7 @@
                                                "Microsoft.Policies.Edge::NetworkPredictionOptions",
                                                "Microsoft.Policies.Edge::EnforceLocalAnchorConstraintsEnabled",
                                                "Microsoft.Policies.Edge::AllowWebAuthnWithBrokenTlsCerts",
+                                               "Microsoft.Policies.Edge::OnFileAttachedEnterpriseConnector",
                                                "Microsoft.Policies.Edge::AllowTokenBindingForUrls",
                                                "Microsoft.Policies.Edge::EnableOnlineRevocationChecks",
                                                "Microsoft.Policies.Edge::ConfigureOnlineTextToSpeech",
@@ -1280,6 +1282,7 @@
                                                "Microsoft.Policies.Edge::InternetExplorerIntegrationAlwaysUseOSCapture",
                                                "Microsoft.Policies.Edge::ClickOnceEnabled",
                                                "Microsoft.Policies.Edge::CryptoWalletEnabled",
+                                               "Microsoft.Policies.Edge::OnPrintEnterpriseConnector",
                                                "Microsoft.Policies.Edge::GloballyScopeHTTPAuthCacheEnabled",
                                                "Microsoft.Policies.Edge::PictureInPictureOverlayEnabled",
                                                "Microsoft.Policies.Edge::WebWidgetIsEnabledOnStartup",
@@ -1332,6 +1335,7 @@
                                                "Microsoft.Policies.Edge::TotalMemoryLimitMb",
                                                "Microsoft.Policies.Edge::SavingBrowserHistoryDisabled",
                                                "Microsoft.Policies.Edge::EdgeAssetDeliveryServiceEnabled",
+                                               "Microsoft.Policies.Edge::WebAuthenticationRemoteDesktopAllowedOrigins",
                                                "Microsoft.Policies.Edge::AutoplayAllowlist",
                                                "Microsoft.Policies.Edge::SmartActionsBlockList",
                                                "Microsoft.Policies.Edge::InternetExplorerModeTabInEdgeModeAllowed",
@@ -1573,6 +1577,7 @@
                               "policies":  [
                                                "Microsoft.Policies.Edge::IPv6ReachabilityOverrideEnabled",
                                                "Microsoft.Policies.Edge::AccessControlAllowMethodsInCORSPreflightSpecConformant",
+                                               "Microsoft.Policies.Edge::HappyEyeballsV3Enabled",
                                                "Microsoft.Policies.Edge::BlockTruncatedCookies",
                                                "Microsoft.Policies.Edge::DataURLWhitespacePreservationEnabled",
                                                "Microsoft.Policies.Edge::ZstdContentEncodingEnabled",
@@ -2416,7 +2421,7 @@
                             "name":  "RelatedMatchesCloudServiceEnabled",
                             "class":  "Both",
                             "displayName":  "Configure Related Matches in Find on Page (obsolete)",
-                            "explainText":  "OBSOLETE: This policy is obsolete and doesn\u0027t work after Microsoft Edge 134.\n\nSpecifies how the user receives related matches in Find on Page, which provides spellcheck, synonyms, and Q\u0026A results in Microsoft Edge.\n\nIf you enable or do not configure this policy, users can receive related matches in Find on Page on all sites. The results are processed through a cloud service.\n\nIf you disable this policy, users can receive related matches in Find on Page on a limited set of sites. In this case, results are processed locally on the user\u0027s device.\n\nNote: This policy is obsoleted because this feature has never been enabled in Microsoft Edge. As a result, this policy is not supported in any version of Microsoft Edge.",
+                            "explainText":  "OBSOLETE: This policy is obsolete and doesn\u0027t work after Microsoft Edge 134.\n\nSpecifies how the user receives related matches in Find on Page, which provides spellcheck, synonyms, and Q\u0026A results in Microsoft Edge.\n\nIf you enable or do not configure this policy, users can receive related matches in Find on Page on all sites. The results are processed through a cloud service.\n\nIf you disable this policy, users can receive related matches in Find on Page on a limited set of sites. In this case, results are processed locally on the user\u0027s device.\n\nNote: This policy is obsolete. The associated cloud service has been discontinued, so the feature and policy are not supported on any versions of Microsoft Edge.",
                             "supportedOn":  "Microsoft Edge version 99-134, Windows 7 or later",
                             "categoryId":  "Microsoft.Policies.Edge::microsoft_edge",
                             "registry":  {
@@ -3188,6 +3193,32 @@
                             "admxFile":  "msedge.admx"
                         },
                         {
+                            "id":  "Microsoft.Policies.Edge::OnBulkDataEntryEnterpriseConnector",
+                            "name":  "OnBulkDataEntryEnterpriseConnector",
+                            "class":  "Both",
+                            "displayName":  "Configuration policy for bulk data entry for Microsoft Edge for Business Data Loss Prevention Connectors",
+                            "explainText":  "List of Microsoft Edge for Business Data Loss Prevention Connectors services settings to be applied when data is entered in Microsoft Edge from the clipboard or by drag and dropping web content.\n\nConnector Fields\n\n1. url_list,\ntags,\nenable,\ndisable\nThese fields determine whether the connector sends data for analysis when content is entered on a specific page, and which tags to include in the analysis request.\nA tag associated with an enable pattern is included in the request if the page URL matches the pattern—unless a corresponding disable pattern also matches.\nAnalysis is triggered if at least one tag is included in the request.\n\n2. service_provider\nIdentifies the analysis service provider the configuration applies to.\n\n3. block_until_verdict\nIf set to 1, Microsoft Edge waits for a response from the analysis service before giving the page access to the data.\nAny other integer value allows the page to access the data immediately.\n\n4. default_action\nIf set to block, Microsoft Edge denies page access to the data if an error occurs while contacting the analysis service.\nAny other value permits the page to access the data.\n\n5. minimum_data_size\nSpecifies the minimum size (in bytes) that the entered data must meet or exceed to be scanned.\nDefault: 100 bytes if the field is not set.\n\nThis policy requires additional setup to take effect. For configuration guidance, see https://go.microsoft.com/fwlink/?linkid=2320413.\n\nExample value:\n\n[\n  {\n    \"block_until_verdict\": 0,\n    \"default_action\": \"allow\",\n    \"disable\": [\n      {\n        \"tags\": [\n          \"malware\"\n        ],\n        \"url_list\": [\n          \"*.us.com\"\n        ]\n      }\n    ],\n    \"enable\": [\n      {\n        \"tags\": [\n          \"malware\"\n        ],\n        \"url_list\": [\n          \"*\"\n        ]\n      },\n      {\n        \"tags\": [\n          \"dlp\"\n        ],\n        \"url_list\": [\n          \"*.them.com\",\n          \"*.others.com\"\n        ]\n      }\n    ],\n    \"minimum_data_size\": 100,\n    \"service_provider\": \"local_system_agent\"\n  }\n]",
+                            "supportedOn":  "Microsoft Edge version 137, Windows 7 or later",
+                            "categoryId":  "Microsoft.Policies.Edge::microsoft_edge",
+                            "registry":  {
+                                             "key":  "Software\\Policies\\Microsoft\\Edge",
+                                             "type":  "Unknown",
+                                             "elements":  [
+                                                              {
+                                                                  "id":  "OnBulkDataEntryEnterpriseConnector",
+                                                                  "valueName":  "OnBulkDataEntryEnterpriseConnector",
+                                                                  "type":  "REG_SZ",
+                                                                  "options":  null,
+                                                                  "minValue":  null,
+                                                                  "maxValue":  null,
+                                                                  "maxLength":  "1000000",
+                                                                  "required":  false
+                                                              }
+                                                          ]
+                                         },
+                            "admxFile":  "msedge.admx"
+                        },
+                        {
                             "id":  "Microsoft.Policies.Edge::ImportBrowserSettings",
                             "name":  "ImportBrowserSettings",
                             "class":  "Both",
@@ -3937,7 +3968,7 @@
                             "name":  "DynamicCodeSettings",
                             "class":  "Both",
                             "displayName":  "Dynamic Code Settings",
-                            "explainText":  "This policy controls the dynamic code settings for Microsoft Edge.\n\nDisabling dynamic code improves the security of Microsoft Edge by preventing potentially hostile dynamic code and third-party code from making changes to Microsoft Edge\u0027s behavior. However this might cause compatibility issues with third-party software that must run in the browser process.\n\nIf you set this policy to 0 (the default) or leave unset, then Microsoft Edge will use the default settings.\n\nIf you set this policy to 1 – (EnabledForBrowser) then the Microsoft Edge browser process is prevented from creating dynamic code.\n\nPolicy options mapping:\n\n* Default (0) = Default dynamic code settings\n\n* EnabledForBrowser (1) = Prevent the browser process from creating dynamic code\n\nUse the preceding information when configuring this policy.",
+                            "explainText":  "This policy controls the dynamic code settings for Microsoft Edge.\n\nDisabling dynamic code improves the security of Microsoft Edge by preventing potentially hostile dynamic code and third-party code from making changes to Microsoft Edge\u0027s behavior. However this might cause compatibility issues with third-party software (e.g. certain printer drivers) that must run in the browser process.\n\nIf you set this policy to 0 (the default) or leave unset, then Microsoft Edge will use the default settings.\n\nIf you set this policy to 1 – (EnabledForBrowser) then the Microsoft Edge browser process is prevented from creating dynamic code.\n\nPolicy options mapping:\n\n* Default (0) = Default dynamic code settings\n\n* EnabledForBrowser (1) = Prevent the browser process from creating dynamic code\n\nUse the preceding information when configuring this policy.",
                             "supportedOn":  "Microsoft Edge version 128, Windows 7 or later",
                             "categoryId":  "Microsoft.Policies.Edge::microsoft_edge",
                             "registry":  {
@@ -5872,6 +5903,33 @@
                             "registry":  {
                                              "key":  "Software\\Policies\\Microsoft\\Edge",
                                              "valueName":  "MicrosoftOfficeMenuEnabled",
+                                             "type":  "REG_DWORD",
+                                             "enabledValue":  1,
+                                             "disabledValue":  0,
+                                             "options":  [
+                                                             {
+                                                                 "value":  1,
+                                                                 "display":  "Enabled"
+                                                             },
+                                                             {
+                                                                 "value":  0,
+                                                                 "display":  "Disabled"
+                                                             }
+                                                         ]
+                                         },
+                            "admxFile":  "msedge.admx"
+                        },
+                        {
+                            "id":  "Microsoft.Policies.Edge::HappyEyeballsV3Enabled",
+                            "name":  "HappyEyeballsV3Enabled",
+                            "class":  "Both",
+                            "displayName":  "Use the Happy Eyeballs V3 algorithm for connection attempts",
+                            "explainText":  "Controls whether Microsoft Edge uses the Happy Eyeballs V3 algorithm to optimize connection attempts. This algorithm improves reliability and performance in dual-stack (IPv4/IPv6) networks by racing connection attempts across IP versions and HTTP protocols (e.g., HTTP/3 vs. others). For more details, see https://datatracker.ietf.org/doc/draft-pauly-happy-happyeyeballs-v3.\n\nEnabled or not configured: Uses the algorithm for connection attempts.\n\nDisabled: Disables the algorithm.\n\nNote: This policy supports dynamic refresh.\n\nImportant: This policy is temporary and will be removed in a future version.",
+                            "supportedOn":  "Microsoft Edge version 137, Windows 7 or later",
+                            "categoryId":  "Microsoft.Policies.Edge::Network",
+                            "registry":  {
+                                             "key":  "Software\\Policies\\Microsoft\\Edge",
+                                             "valueName":  "HappyEyeballsV3Enabled",
                                              "type":  "REG_DWORD",
                                              "enabledValue":  1,
                                              "disabledValue":  0,
@@ -9301,6 +9359,33 @@
                             "admxFile":  "msedge.admx"
                         },
                         {
+                            "id":  "Microsoft.Policies.Edge::RelatedWebsiteSetsEnabled",
+                            "name":  "RelatedWebsiteSetsEnabled",
+                            "class":  "Both",
+                            "displayName":  "Enable Related Website Sets",
+                            "explainText":  "This policy lets you control the enablement of the Related Website Sets feature. Related Website Sets (RWS) is a way for an organisation to declare relationships among sites, so that Microsoft Edge allows limited third-party cookie access for specific purposes across those sites.\n\nIf this policy set to True or unset, the Related Website Sets feature is enabled.\n\nIf this policy is set to False, the Related Website Sets feature is disabled.",
+                            "supportedOn":  "Microsoft Edge version 121, Windows 7 or later",
+                            "categoryId":  "Microsoft.Policies.Edge::RelatedWebsiteSets",
+                            "registry":  {
+                                             "key":  "Software\\Policies\\Microsoft\\Edge",
+                                             "valueName":  "RelatedWebsiteSetsEnabled",
+                                             "type":  "REG_DWORD",
+                                             "enabledValue":  1,
+                                             "disabledValue":  0,
+                                             "options":  [
+                                                             {
+                                                                 "value":  1,
+                                                                 "display":  "Enabled"
+                                                             },
+                                                             {
+                                                                 "value":  0,
+                                                                 "display":  "Disabled"
+                                                             }
+                                                         ]
+                                         },
+                            "admxFile":  "msedge.admx"
+                        },
+                        {
                             "id":  "Microsoft.Policies.Edge::EdgeSidebarAppUrlHostBlockList",
                             "name":  "EdgeSidebarAppUrlHostBlockList",
                             "class":  "Both",
@@ -10573,9 +10658,9 @@
                             "id":  "Microsoft.Policies.Edge::AddressBarMicrosoftSearchInBingProviderEnabled",
                             "name":  "AddressBarMicrosoftSearchInBingProviderEnabled",
                             "class":  "Both",
-                            "displayName":  "Enable Microsoft Search in Bing suggestions in the address bar (deprecated)",
-                            "explainText":  "DEPRECATED: This policy is deprecated. It is currently supported but will become obsolete in a future release.\n\nEnables the display of relevant Microsoft Search in Bing suggestions in the address bar\u0027s suggestion list when the user enters a search query in the address bar. If you enable or don\u0027t configure this policy, users can see internal results powered by Microsoft Search in Bing in the Microsoft Edge address bar suggestion list. To access Microsoft Search in Bing results, the user must be signed into Microsoft Edge with their organization\u0027s Azure AD account.\n\nIf you disable this policy, users won\u0027t see internal results in the Microsoft Edge address bar suggestion list.\n\nStarting with Microsoft Edge version 89, Microsoft Search in Bing suggestions will be available even if Bing is not the user\u0027s default search provider.\n\nThis policy is deprecated due to changes in access to work search through Bing-related endpoints and will be obsolete in Microsoft Edge version 137. Use the AddressBarWorkSearchResultsEnabled policy instead.",
-                            "supportedOn":  "Microsoft Edge version 81, Windows 7 or later",
+                            "displayName":  "Enable Microsoft Search in Bing suggestions in the address bar (obsolete)",
+                            "explainText":  "OBSOLETE: This policy is obsolete and doesn\u0027t work after Microsoft Edge 136.\n\nEnables the display of relevant Microsoft Search in Bing suggestions in the address bar\u0027s suggestion list when the user enters a search query in the address bar. If you enable or don\u0027t configure this policy, users can see internal results powered by Microsoft Search in Bing in the Microsoft Edge address bar suggestion list. To access Microsoft Search in Bing results, the user must be signed into Microsoft Edge with their organization\u0027s Azure AD account.\n\nIf you disable this policy, users won\u0027t see internal results in the Microsoft Edge address bar suggestion list.\n\nStarting with Microsoft Edge version 89, Microsoft Search in Bing suggestions will be available even if Bing is not the user\u0027s default search provider.\n\nThis policy is no longer applicable due to changes in access to work search through Bing-related endpoints.",
+                            "supportedOn":  "Microsoft Edge version 81-136, Windows 7 or later",
                             "categoryId":  "Microsoft.Policies.Edge::microsoft_edge",
                             "registry":  {
                                              "key":  "Software\\Policies\\Microsoft\\Edge",
@@ -18154,29 +18239,28 @@
                             "admxFile":  "msedge.admx"
                         },
                         {
-                            "id":  "Microsoft.Policies.Edge::RelatedWebsiteSetsEnabled",
-                            "name":  "RelatedWebsiteSetsEnabled",
+                            "id":  "Microsoft.Policies.Edge::OnFileAttachedEnterpriseConnector",
+                            "name":  "OnFileAttachedEnterpriseConnector",
                             "class":  "Both",
-                            "displayName":  "Enable Related Website Sets",
-                            "explainText":  "This policy lets you control the enablement of the Related Website Sets feature. Related Website Sets (RWS) is a way for an organisation to declare relationships among sites, so that Microsoft Edge allows limited third-party cookie access for specific purposes across those sites.\n\nIf this policy set to True or unset, the Related Website Sets feature is enabled.\n\nIf this policy is set to False, the Related Website Sets feature is disabled.",
-                            "supportedOn":  "Microsoft Edge version 121, Windows 7 or later",
-                            "categoryId":  "Microsoft.Policies.Edge::RelatedWebsiteSets",
+                            "displayName":  "Configuration policy for files attached for Microsoft Edge for Business Data Loss Prevention Connectors",
+                            "explainText":  "List of Microsoft Edge for Business Data Loss Prevention Connectors services settings to be applied when a file is attached to Microsoft Edge.\n\nConnector Fields\n\n1. url_list,\ntags,\nenable,\ndisable\nThese fields determine whether the connector sends data for analysis when content is entered on a specific page, and which tags to include in the analysis request.\nA tag associated with an enable pattern is included in the request if the page URL matches the pattern—unless a corresponding disable pattern also matches.\nAnalysis is triggered if at least one tag is included in the request.\n\n2. service_provider\nIdentifies the analysis service provider the configuration applies to.\n\n3. block_until_verdict\nIf set to 1, Microsoft Edge waits for a response from the analysis service before giving the page access to the data.\nAny other integer value allows the page to access the data immediately.\n\n4. default_action\nIf set to block, Microsoft Edge denies page access to the data if an error occurs while contacting the analysis service.\nAny other value permits the page to access the data.\n\nThis policy requires additional setup to take effect. For configuration guidance, see https://go.microsoft.com/fwlink/?linkid=2320413.\n\nExample value:\n\n[\n  {\n    \"block_until_verdict\": 0,\n    \"default_action\": \"allow\",\n    \"disable\": [\n      {\n        \"tags\": [\n          \"malware\"\n        ],\n        \"url_list\": [\n          \"*.us.com\"\n        ]\n      }\n    ],\n    \"enable\": [\n      {\n        \"tags\": [\n          \"malware\"\n        ],\n        \"url_list\": [\n          \"*\"\n        ]\n      },\n      {\n        \"tags\": [\n          \"dlp\"\n        ],\n        \"url_list\": [\n          \"*.them.com\",\n          \"*.others.com\"\n        ]\n      }\n    ],\n    \"service_provider\": \"local_system_agent\"\n  }\n]",
+                            "supportedOn":  "Microsoft Edge version 137, Windows 7 or later",
+                            "categoryId":  "Microsoft.Policies.Edge::microsoft_edge",
                             "registry":  {
                                              "key":  "Software\\Policies\\Microsoft\\Edge",
-                                             "valueName":  "RelatedWebsiteSetsEnabled",
-                                             "type":  "REG_DWORD",
-                                             "enabledValue":  1,
-                                             "disabledValue":  0,
-                                             "options":  [
-                                                             {
-                                                                 "value":  1,
-                                                                 "display":  "Enabled"
-                                                             },
-                                                             {
-                                                                 "value":  0,
-                                                                 "display":  "Disabled"
-                                                             }
-                                                         ]
+                                             "type":  "Unknown",
+                                             "elements":  [
+                                                              {
+                                                                  "id":  "OnFileAttachedEnterpriseConnector",
+                                                                  "valueName":  "OnFileAttachedEnterpriseConnector",
+                                                                  "type":  "REG_SZ",
+                                                                  "options":  null,
+                                                                  "minValue":  null,
+                                                                  "maxValue":  null,
+                                                                  "maxLength":  "1000000",
+                                                                  "required":  false
+                                                              }
+                                                          ]
                                          },
                             "admxFile":  "msedge.admx"
                         },
@@ -21112,6 +21196,32 @@
                             "admxFile":  "msedge.admx"
                         },
                         {
+                            "id":  "Microsoft.Policies.Edge::OnPrintEnterpriseConnector",
+                            "name":  "OnPrintEnterpriseConnector",
+                            "class":  "Both",
+                            "displayName":  "Configuration policy for print for Microsoft Edge for Business Data Loss Prevention Connectors",
+                            "explainText":  "List of Microsoft Edge for Business Data Loss Prevention Connectors services settings to be applied when a page or file is printed from Microsoft Edge.\n\nConnector Fields\n\n1. url_list,\ntags,\nenable,\ndisable\nThese fields determine whether the connector sends data for analysis when content is entered on a specific page, and which tags to include in the analysis request.\nA tag associated with an enable pattern is included in the request if the page URL matches the pattern—unless a corresponding disable pattern also matches.\nAnalysis is triggered if at least one tag is included in the request.\n\n2. service_provider\nIdentifies the analysis service provider the configuration applies to.\n\n3. block_until_verdict\nIf set to 1, Microsoft Edge waits for a response from the analysis service before giving the page access to the data.\nAny other integer value allows the page to access the data immediately.\n\n4. default_action\nIf set to block, Microsoft Edge denies page access to the data if an error occurs while contacting the analysis service.\nAny other value permits the page to access the data.\n\nThis policy requires additional setup to take effect. For configuration guidance, see https://go.microsoft.com/fwlink/?linkid=2320413.\n\nExample value:\n\n[\n  {\n    \"block_until_verdict\": 0,\n    \"default_action\": \"allow\",\n    \"disable\": [\n      {\n        \"tags\": [\n          \"dlp\"\n        ],\n        \"url_list\": [\n          \"*.us.com\"\n        ]\n      }\n    ],\n    \"enable\": [\n      {\n        \"tags\": [\n          \"dlp\"\n        ],\n        \"url_list\": [\n          \"*.them.com\",\n          \"*.others.com\"\n        ]\n      }\n    ],\n    \"service_provider\": \"local_system_agent\"\n  }\n]",
+                            "supportedOn":  "Microsoft Edge version 137, Windows 7 or later",
+                            "categoryId":  "Microsoft.Policies.Edge::microsoft_edge",
+                            "registry":  {
+                                             "key":  "Software\\Policies\\Microsoft\\Edge",
+                                             "type":  "Unknown",
+                                             "elements":  [
+                                                              {
+                                                                  "id":  "OnPrintEnterpriseConnector",
+                                                                  "valueName":  "OnPrintEnterpriseConnector",
+                                                                  "type":  "REG_SZ",
+                                                                  "options":  null,
+                                                                  "minValue":  null,
+                                                                  "maxValue":  null,
+                                                                  "maxLength":  "1000000",
+                                                                  "required":  false
+                                                              }
+                                                          ]
+                                         },
+                            "admxFile":  "msedge.admx"
+                        },
+                        {
                             "id":  "Microsoft.Policies.Edge::GloballyScopeHTTPAuthCacheEnabled",
                             "name":  "GloballyScopeHTTPAuthCacheEnabled",
                             "class":  "Both",
@@ -22163,7 +22273,7 @@
                             "name":  "WebContentFilteringBlockedCategories",
                             "class":  "Both",
                             "displayName":  "Configure Web Content Filtering",
-                            "explainText":  "Configure this policy to block access to specific categories of websites in Microsoft Edge on Windows devices. Web Content Filtering is available exclusively in Microsoft Edge on Windows and requires the appropriate Microsoft 365 licensing.\n\nWhen this policy is enabled, users are blocked from accessing URLs that fall within the defined list of content categories. You can configure this by adding Category Strings to the list of blocked categories.\n\nIf the policy is not configured or is disabled, no categories will be blocked.\n\nTo view the list of supported content categories, including each Category String and its definition, refer to: https://learn.microsoft.com/en-us/defender-endpoint/web-content-filtering?view=o365-worldwide#category-definitions\n\nTo block a specific URL outside of a category, use the “Block access to a list of URLs” policy.\n\nTo allow a specific URL that falls under a blocked category, use the “Define a list of allowed URLs” policy.\n\nNote: This policy is supported only when deployed through the Edge management service, not via Microsoft Intune.\n\nTo use this policy, your organization must have one of the following licenses:\n- Microsoft 365 A1, A3, or A5\n- Microsoft 365 Business Premium\n- Microsoft 365 Business Basic or Standard with Intune Plan 1 or Plan 2\n\nPolicy options mapping:\n\n* chat (chat) = Chat\n\n* child_abuse_images (child_abuse_images) = Child Abuse Images\n\n* criminal_activity (criminal_activity) = Criminal Activity\n\n* download_sites (download_sites) = Download Sites\n\n* gambling (gambling) = Gambling\n\n* games (games) = Games\n\n* hacking (hacking) = Hacking\n\n* hate_and_intolerance (hate_and_intolerance) = Hate and Intolerance\n\n* illegal_drug (illegal_drug) = Illegal Drug\n\n* illegal_software (illegal_software) = Illegal Software\n\n* image_sharing (image_sharing) = Image Sharing\n\n* instant_messaging (instant_messaging) = Instant Messaging\n\n* nudity (nudity) = Nudity\n\n* peer_to_peer (peer_to_peer) = Peer to Peer\n\n* pornography_or_sexually_explicit (pornography_or_sexually_explicit) = Pornography or Sexually Explicit\n\n* professional_networking (professional_networking) = Professional Networking\n\n* self_harm (self_harm) = Self Harm\n\n* sex_education (sex_education) = Sex Education\n\n* social_networking (social_networking) = Social Networking\n\n* streaming_and_downloads (streaming_and_downloads) = Streaming Media and Downloads\n\n* tasteless (tasteless) = Tasteless\n\n* violence (violence) = Violence\n\n* weapons (weapons) = Weapons\n\n* web_based_email (web_based_email) = Web Based Email\n\n* none (none) = None\n\nUse the preceding information when configuring this policy.\n\nExample value:\n\ngambling\nstreaming_and_downloads\ngames",
+                            "explainText":  "Configure this policy to block access to specific categories of websites in Microsoft Edge on Windows devices. Web Content Filtering is available exclusively in Microsoft Edge on Windows and requires the appropriate Microsoft 365 licensing.\n\nWhen this policy is enabled, users are blocked from accessing URLs that fall within the defined list of content categories. You can configure this by adding Category Strings to the list of blocked categories.\n\nIf the policy is not configured or is disabled, no categories will be blocked.\n\nTo view the list of supported content categories, including each Category String and its definition, refer to: https://learn.microsoft.com/en-us/defender-endpoint/web-content-filtering?view=o365-worldwide#category-definitions\n\nTo block a specific URL outside of a category, use the “Block access to a list of URLs” policy.\n\nTo allow a specific URL that falls under a blocked category, use the “Define a list of allowed URLs” policy.\n\nNote: This policy is supported only when deployed through the Edge management service, not via Microsoft Intune.\n\nTo use this policy, your organization must have one of the following licenses:\n- Microsoft 365 A1, A3, or A5\n- Microsoft 365 Business Premium\n- Microsoft 365 Business Basic or Standard with Intune Plan 1 or Plan 2\n\nPolicy options mapping:\n\n* chat (chat) = Chat\n\n* child_abuse_images (child_abuse_images) = Child Abuse Images\n\n* criminal_activity (criminal_activity) = Criminal Activity\n\n* download_sites (download_sites) = Download Sites\n\n* gambling (gambling) = Gambling\n\n* games (games) = Games\n\n* hacking (hacking) = Hacking\n\n* hate_and_intolerance (hate_and_intolerance) = Hate and Intolerance\n\n* illegal_drug (illegal_drug) = Illegal Drug\n\n* illegal_software (illegal_software) = Illegal Software\n\n* image_sharing (image_sharing) = Image Sharing\n\n* instant_messaging (instant_messaging) = Instant Messaging\n\n* nudity (nudity) = Nudity\n\n* peer_to_peer (peer_to_peer) = Peer to Peer\n\n* pornography_or_sexually_explicit (pornography_or_sexually_explicit) = Pornography or Sexually Explicit\n\n* professional_networking (professional_networking) = Professional Networking\n\n* self_harm (self_harm) = Self Harm\n\n* sex_education (sex_education) = Sex Education\n\n* social_networking (social_networking) = Social Networking\n\n* streaming_and_downloads (streaming_and_downloads) = Streaming Media and Downloads\n\n* tasteless (tasteless) = Tasteless\n\n* violence (violence) = Violence\n\n* weapons (weapons) = Weapons\n\n* web_based_email (web_based_email) = Web Based Email\n\n* gen_ai (gen_ai) = Gen AI\n\n* shopping (shopping) = Shopping\n\n* none (none) = None\n\nUse the preceding information when configuring this policy.\n\nExample value:\n\ngambling\nstreaming_and_downloads\ngames",
                             "supportedOn":  "Microsoft Edge version 135, Windows 7 or later",
                             "categoryId":  "Microsoft.Policies.Edge::microsoft_edge",
                             "registry":  {
@@ -23962,9 +24072,9 @@
                             "id":  "Microsoft.Policies.Edge::MutationEventsEnabled",
                             "name":  "MutationEventsEnabled",
                             "class":  "Both",
-                            "displayName":  "Enable deprecated/removed Mutation Events (deprecated)",
-                            "explainText":  "DEPRECATED: This policy is deprecated. It is currently supported but will become obsolete in a future release.\n\nThis policy provides a temporary opt-in back to a deprecated and removed set of platform events named Mutation Events.\n\nIf you enable this policy, mutation events will continue to be fired, even if they\u0027ve been disabled by default for normal web users.\n\nIf you disable or don\u0027t configure this policy, these events will not be fired.\n\nThis policy is a temporary workaround, and enterprises should still work to remove their dependencies on these mutation events.",
-                            "supportedOn":  "Microsoft Edge version 124, Windows 7 or later",
+                            "displayName":  "Enable deprecated/removed Mutation Events (obsolete)",
+                            "explainText":  "OBSOLETE: This policy is obsolete and doesn\u0027t work after Microsoft Edge 136.\n\nThis policy provides a temporary opt-in back to a deprecated and removed set of platform events named Mutation Events.\n\nIf you enable this policy, mutation events will continue to be fired, even if they\u0027ve been disabled by default for normal web users.\n\nIf you disable or don\u0027t configure this policy, these events will not be fired.\n\nNote:\nThis policy is a temporary workaround and will be obsolete starting with Microsoft Edge version 137.",
+                            "supportedOn":  "Microsoft Edge version 124-136, Windows 7 or later",
                             "categoryId":  "Microsoft.Policies.Edge::microsoft_edge",
                             "registry":  {
                                              "key":  "Software\\Policies\\Microsoft\\Edge",
@@ -24153,6 +24263,32 @@
                                                                                       "display":  "Do not allow the usage of developer mode on extensions page"
                                                                                   }
                                                                               ],
+                                                                  "minValue":  null,
+                                                                  "maxValue":  null,
+                                                                  "maxLength":  null,
+                                                                  "required":  false
+                                                              }
+                                                          ]
+                                         },
+                            "admxFile":  "msedge.admx"
+                        },
+                        {
+                            "id":  "Microsoft.Policies.Edge::WebAuthenticationRemoteDesktopAllowedOrigins",
+                            "name":  "WebAuthenticationRemoteDesktopAllowedOrigins",
+                            "class":  "Both",
+                            "displayName":  "Allowed Origins for Proxied WebAuthn Requests from Remote Desktop Applications.",
+                            "explainText":  "This policy defines a list of allowed HTTPS origins for remote desktop client applications that initiate WebAuthn API requests from a browsing session on a remote host.\n\nOrigins specified in this policy can request WebAuthn authentication for Relying Party IDs (RP IDs) they would not typically be authorized to claim.\n\nOnly HTTPS origins are supported. Wildcards are not permitted. Entries that do not\nmeet these requirements will be ignored.\n\nFor more information about the WebAuthn Remote Desktop Support feature, please see https://github.com/w3c/webauthn/wiki/Explainer:-Remote-Desktop-Support/a4e158c569f456c759d0ddd294a9015bd4d4eb9a.\n\nExample value:\n\nhttps://server:8080/",
+                            "supportedOn":  "Microsoft Edge version 137, Windows 7 or later",
+                            "categoryId":  "Microsoft.Policies.Edge::microsoft_edge",
+                            "registry":  {
+                                             "key":  "Software\\Policies\\Microsoft\\Edge",
+                                             "type":  "Unknown",
+                                             "elements":  [
+                                                              {
+                                                                  "id":  "WebAuthenticationRemoteDesktopAllowedOriginsDesc",
+                                                                  "valueName":  null,
+                                                                  "type":  "REG_SZ",
+                                                                  "options":  null,
                                                                   "minValue":  null,
                                                                   "maxValue":  null,
                                                                   "maxLength":  null,
